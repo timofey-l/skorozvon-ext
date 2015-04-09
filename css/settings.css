@@ -385,9 +385,12 @@ div.switch.off {
 }
 .save-settings-button:hover, .save-settings-button:active{
     box-shadow: 0 2px #3776ad;
-    top: 2px;
     color: #fff;
 }
+.save-settings-button:active{
+    top: 2px;
+}
+
 .group-block{
     padding: 30px 0;
     border-top: 1px solid #cecece;

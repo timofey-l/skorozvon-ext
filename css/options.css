@@ -10,7 +10,7 @@ body{
 	font:16px/24px 'Open Sans', sans-serif;
 	font-weight: 400;
 	height: 100%;
-	
+
 	background: #92c7d6;
   background-image: -webkit-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
   background-image: -moz-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
@@ -59,7 +59,7 @@ select:focus{outline:none;}
 	width: 100%;
 	min-height: 100%;
 	height: auto;
-	
+
 }
 .language{
 	position: absolute;
@@ -103,9 +103,9 @@ select:focus{outline:none;}
 }
 #fancybox-outer{
 	background: rgba(255,255,255,.2);
-	border: 10px solid rgba(255,255,255,.2); 
+	border: 10px solid rgba(255,255,255,.2);
 	border-radius: 10px;
-	
+
 }
 #fancybox-content, #my-content, #my-content-2{
 	background: rgba(255,255,255,.2);
@@ -156,7 +156,7 @@ select:focus{outline:none;}
 	float: left;
 	border-right: 1px solid #d7d7d7;
 	padding-left: 30px;
-	box-sizing: border-box;	
+	box-sizing: border-box;
 }
 #authorization_window .col-1, #authorization_window .col-2{
 	width: 50%;
@@ -164,7 +164,7 @@ select:focus{outline:none;}
 }
 #authorization_window .col-2{
 	float: right;
-	box-sizing: border-box;	
+	box-sizing: border-box;
 	padding: 15px 35px 20px;
 }
 #authorization_window input[type='text'], #authorization_window input[type='password'], #forget_window input[type='text'], #forget_window input[type='email']{
@@ -269,7 +269,7 @@ select:focus{outline:none;}
 }
 #authorization_window a{
 	color: #418bca;
-	text-decoration: underline;	
+	text-decoration: underline;
 	vertical-align: -15px;
 }
 #authorization_window a:hover{
@@ -281,7 +281,7 @@ select:focus{outline:none;}
 	background: #fff;
 	width:530px;
 	height:400px;
-	position: relative; 
+	position: relative;
 	border-radius: 10px;
 	overflow: hidden;
 }
@@ -308,7 +308,7 @@ select:focus{outline:none;}
 	overflow: hidden !important;
 }
 #fancybox-close{
-	display: none !important;	
+	display: none !important;
 }
 #forget_window h2{
 	margin-bottom: 10px;
@@ -367,14 +367,14 @@ select:focus{outline:none;}
 		padding: 0 45px;
 	}
 	/*#large-header{
-		display: none; 
+		display: none;
 	}*/
 	#forget_window, #my-content-2{
-		width:450px;	
+		width:450px;
 	}
 	#forget_window h3{
-		padding-left:20px; 
-		padding-right:20px; 
+		padding-left:20px;
+		padding-right:20px;
 		line-height: 40px;
 	}
 	.sign_up{line-height: 12px;}
@@ -413,7 +413,7 @@ select:focus{outline:none;}
 	}
 	#forget_window, #my-content-2{
 		width:350px;
-		height:350px;	
+		height:350px;
 	}
 	#forget_window h2{
 		margin-top: 20px;
@@ -434,7 +434,7 @@ select:focus{outline:none;}
 	#forget_window .col-2 img {
 		margin: 30px auto 20px;
 	}
-	
+
 }
 @media (max-width: 479px){
 	#authorization_window, #my-content{
@@ -444,7 +444,7 @@ select:focus{outline:none;}
 	html {min-height: 660px;}
 	#forget_window, #my-content-2{
 		width:240px;
-		height: 250px; 
+		height: 250px;
 	}
 	#authorization_window .logo img, #forget_window .logo img{
 		width: 100px;
@@ -501,7 +501,7 @@ select:focus{outline:none;}
 	}
 	#authorization_window .col-2 .vk {
 	 	margin-left: 20px;
-	}	
+	}
 	#authorization_window .col-2 a{
 		margin-right: 5px;
 	}
@@ -531,7 +531,7 @@ select:focus{outline:none;}
 	#my-content, #my-content-2{
 		margin-bottom: 20px;
 		position: static;
-			
+
 	}
 	.footer-info{
 		line-height: 20px;

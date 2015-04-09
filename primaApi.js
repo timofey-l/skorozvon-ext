@@ -13,7 +13,10 @@ PrimaApi = (function () {
             sip_login: '',
             sip_password: '',
             record_calls: false,
-            recieve_incoming_messages: false
+            recieve_incoming_messages: false,
+            show_notify: false,
+            exec_command: false,
+            commands: []
         };
 
         this._services = [];
@@ -26,7 +29,7 @@ PrimaApi = (function () {
                 self.getServices({
                     onSuccess: function (r) {
                         if (r.result == 1) {
-                            this._services = r.data;
+                            self._services = r.data;
                         }
                     }
                 });
@@ -50,29 +53,45 @@ PrimaApi = (function () {
             return false;
         }
         self = this;
-        return this.isServiceEnabled({
-            service: opt.service,
-            onSuccess: function (enabled) {
+        return this.isServiceEnabled(
+            opt.service,
+            function (enabled) {
                 if (enabled) {
                     return self.DoRequest({
                         svc: 'delService',
                         sign: true,
                         data: {
-                            sip_login: self.sip_login,
-                            sip_password: self.sip_password,
+                            sip_login: self._settings.sip_login,
+                            sip_password: self._settings.sip_password,
                             service: opt.service
                         },
                         onSuccess: function (response) {
-                            if (typeof opt.onSuccess === 'function') {
-                                return opt.onSuccess(response);
-                            }
+                            self.getServices({onSuccess:function(r){
+                                if (typeof opt.onSuccess === 'function') {
+                                    return opt.onSuccess(response);
+                                }
+                            }});
                         }
                     });
                 }
+            },
+            true
+        );
+    };
+
+    /**
+     * Проверка подключена ли услуга
+     * @param opt
+     * @returns {*}
+     */
+    PrimaApi.prototype.isServiceEnabled = function (service, callback) {
+        var self = this;
+        this.getServices({
+            onSuccess: function(r) {
+                if (callback) callback(_.find(self._services, function (el) { return el.service == service; }) || false)
             }
         });
     };
-
 
     /**
      * Подключение услуги
@@ -89,28 +108,33 @@ PrimaApi = (function () {
         if (typeof opt.service === 'undefined' || opt.service === '') {
             return false;
         }
+
         self = this;
-        return this.isServiceEnabled({
-            service: opt.service,
-            onSuccess: function (enabled) {
+        return this.isServiceEnabled(
+            opt.service,
+            function (enabled) {
                 if (!enabled) {
                     return self.DoRequest({
                         svc: 'addService',
                         sign: true,
                         data: {
-                            sip_login: self.sip_login,
-                            sip_password: self.sip_password,
+                            sip_login: self._settings.sip_login,
+                            sip_password: self._settings.sip_password,
                             service: opt.service
                         },
                         onSuccess: function (response) {
-                            if (typeof opt.onSuccess === 'function') {
-                                return opt.onSuccess(response);
-                            }
+                            self.getServices({onSuccess:function(r){
+                                if (typeof opt.onSuccess === 'function') {
+                                    return opt.onSuccess(response);
+                                }
+                            }});
                         }
+
                     });
                 }
-            }
-        });
+            },
+            true
+        );
     };
     /**
      * Получение списка подключенных услуг
@@ -121,6 +145,7 @@ PrimaApi = (function () {
         if (opt == null) {
             opt = {};
         }
+        var self = this;
         return this.DoRequest({
             svc: 'listCurrentServices',
             sign: true,
@@ -129,6 +154,16 @@ PrimaApi = (function () {
                 sip_password: this._settings.sip_password
             },
             onSuccess: function (r) {
+                if (r.result == 1)
+                    self._services = r.data;
+
+                var rc = _.find(self._services, function (el) { return el.service == 'call-recording'; });
+                if (rc) {
+                    self._settings.record_calls = true;
+                } else {
+                    self._settings.record_calls = false;
+                }
+                self.saveSettings();
                 if (typeof opt.onSuccess == 'function') {
                     return opt.onSuccess(r);
                 }
@@ -279,22 +314,6 @@ PrimaApi = (function () {
                     data: {
                         sip_login: self._settings.sip_login,
                         sip_password: self._settings.sip_password
-                    },
-                    onSuccess: function (response) {
-                        if (response.result == 1) {
-                            _.extend(res, response.data);
-                            _.extend(res, {loggedIn: true});
-                        }
-                    }
-                });
-            })
-            // Имя
-            .then(function () {
-                return self.DoRequest({
-                    svc: 'getBalance2',
-                    data: {
-                        sip_login: self._settings.sip_login,
-                        sip_password: self._settings.sip_login
                     },
                     onSuccess: function (response) {
                         if (response.result == 1) {
