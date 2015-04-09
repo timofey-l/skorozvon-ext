@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/callback.css"/>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="functions.js"></script>
+    <script src="PhoneFormat.js"></script>
+    <script src="js/langs.js"></script>
+    <script src="js/callback.js"></script>
+    <script src="js/background_connection.js"></script>
+    <title>Primatelecom</title>
+</head>
+<body>
+<input type="hidden" id="language" value="ru"/>
+<div class="wrap">
+    <div>
+        <h1 data-text-id="callback_title">Соединение двух телефонов</h1>
+        <div class="phone_container">
+            <input id="phoneFrom" class="phone_number phone_number1" value="">
+        </div>
+        <div class="phone_container">
+            <input id="phoneTo" class="phone_number phone_number2" value="">
+        </div>
+        <div class="buttons">
+            <button class="button-send" data-text-id="connect">Соединить</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

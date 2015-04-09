@@ -1,0 +1,541 @@
+/* fonts */
+/* General Reset */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400&subset=latin,cyrillic-ext);
+
+html{height: 100%;}
+body{
+	margin:0;
+	background:#f8fafb;
+	color:#59595c;
+	font:16px/24px 'Open Sans', sans-serif;
+	font-weight: 400;
+	height: 100%;
+	
+	background: #92c7d6;
+  background-image: -webkit-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+  background-image: -moz-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+  background-image: -o-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+  background-image: radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+
+}
+img{border-style:none;}
+input,
+textarea,
+select{
+	color:#000;
+	vertical-align:middle;
+	font:100% Arial, Helvetica, sans-serif;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: none;
+	cursor: pointer;
+}
+form,fieldset{
+	margin:0;
+	padding:0;
+	border-style:none;
+}
+blockquote, q{quotes: none;}
+q:before,
+q:after {content: '';}
+a{
+	color:#000;
+	text-decoration:none;
+}
+a:hover{text-decoration:underline;}
+a:focus,
+input:focus,
+textarea:focus,
+select:focus{outline:none;}
+.container{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	margin: auto;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	
+}
+.language{
+	position: absolute;
+	padding: 7px 9px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	top: 10px;
+	right: 10px;
+	line-height: 1;
+	font-size: 1px;
+	background: #e8e8e8;
+	box-shadow: 0 2px #d4d4d4;
+	cursor: pointer;
+}
+.language:active{
+	top: 12px;
+	box-shadow: 0 0 #d4d4d4;
+}
+.language img{
+	width: 24px;
+	height: 15px;
+}
+.language.ru .rus{display: block;}
+.language.ru .eng{display: none;}
+.language.en .rus{display: none;}
+.language.en .eng{display: block;}
+#authorization_window{
+	background: #fff;
+	width:800px;
+	height:570px;
+	border-radius: 10px;
+	position: relative;
+}
+#authorization_window p{
+	text-align: center;
+}
+.sign_up{
+	text-align: center;
+	clear: both;
+}
+#fancybox-outer{
+	background: rgba(255,255,255,.2);
+	border: 10px solid rgba(255,255,255,.2); 
+	border-radius: 10px;
+	
+}
+#fancybox-content, #my-content, #my-content-2{
+	background: rgba(255,255,255,.2);
+	border-radius: 10px;
+	padding:10px;
+	margin: 0 auto;
+}
+#my-content{
+	width: 800px;
+	height:570px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+#my-content-2{
+	width:530px;
+	height:400px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+#fancybox-overlay{
+	display: none !important;
+}
+#authorization_window .logo{
+	padding-top: 20px;
+	text-align: center;
+}
+#authorization_window h1, #forget_window h2, #forget_window h3{
+	font:36px/36px 'Open Sans', sans-serif;
+	font-weight: 300;
+	text-align: center;
+	margin-top: 40px;
+}
+#forget_window h1{
+	margin-top: 35px;
+}
+#forget_window h3{
+	margin-top: 15px;
+}
+#authorization_window .col-1{
+	float: left;
+	border-right: 1px solid #d7d7d7;
+	padding-left: 30px;
+	box-sizing: border-box;	
+}
+#authorization_window .col-1, #authorization_window .col-2{
+	width: 50%;
+	margin: 10px 0 5px 0;
+}
+#authorization_window .col-2{
+	float: right;
+	box-sizing: border-box;	
+	padding: 15px 35px 20px;
+}
+#authorization_window input[type='text'], #authorization_window input[type='password'], #forget_window input[type='text'], #forget_window input[type='email']{
+	border: 1px solid #d9d9d9;
+	padding-left: 80px;
+	height: 44px;
+	margin: 20px 0 10px;
+	box-shadow: 0 0 0 4px rgba(226,226,226,.3);
+	width: 250px;
+	height: 18px;
+	padding: 14px 14px 14px 65px;
+}
+#authorization_window input[type='text']:focus, #authorization_window input[type='password']:focus, #forget_window input[type='text']:focus, #forget_window input[type='email']:focus{box-shadow: 0px 0px 2px 4px #eaf5ff;}
+#authorization_window input[type='password']{
+	height: 18px;
+	padding: 14px 14px 14px 80px;
+	width: 236px;
+}
+#forget_window input[type='email']{
+	width: 280px;
+}
+#authorization_window input[type='text']:focus, #authorization_window input[type='password']:focus, #forget_window input[type='text']:focus, #forget_window input[type='email']:focus{
+	box-shadow: 0px 0px 2px 4px #eaf5ff;
+}
+.login, .pass, .forget{
+	position: relative;
+}
+.login:before, .pass:before, .forget:before{
+	content:'';
+	position: absolute;
+	left: 1px;
+	top: 21px;
+	display: block;
+	width: 60px;
+	height: 48px;
+}
+.login:before{
+	background: url('../img/login.png') 0px 0px no-repeat;
+}
+.pass:before{
+	background: url('../img/pass.png') 0px 0px no-repeat;
+}
+.forget:before{
+	background: url('../img/forget.png') 0px 0px no-repeat;
+}
+#authorization_window .col-2 a{
+	width: 42px;
+	height: 42px;
+	border-radius: 10px;
+	display: block;
+	float: left;
+	margin-right: 20px;
+	opacity: 0.75;
+	filter: alpha(Opacity=75);
+}
+#authorization_window .col-2 .vk{
+	background: #43628b url('../img/vk.png') center center no-repeat;
+}
+#authorization_window .col-2 .fb{
+	background: #063587 url('../img/fb.png') center center no-repeat;
+}
+#authorization_window .col-2 .google{
+	background: #be3027 url('../img/google.png') center center no-repeat;
+}
+#authorization_window .col-2 .odn{
+	background: #e2440e url('../img/ok.png') center center no-repeat;
+}
+#authorization_window .col-2 .prima{
+	background: url('../img/prima.png') center center no-repeat;
+}
+#authorization_window .col-2 a:hover{
+	opacity: 0.9;
+	filter: alpha(Opacity=90);
+}
+#authorization_window .submit-button, #forget_window .submit-button{
+	border: none;
+	font-size: 20px;
+	color: #fff;
+	background: none;
+	cursor: pointer;
+	padding: 12px 48px;
+	display: inline-block;
+	margin: 25px 30px 0 0;
+	letter-spacing: 1px;
+	outline: none;
+	position: relative;
+	background: #418bca;
+	box-shadow: 0 2px #3776ad;
+	border-radius: 10px;
+	box-sizing: border-box;
+	clear: both;
+	text-decoration: none;
+	outline: none;
+}
+#forget_window .submit-button{
+	margin: 25px auto 0;
+}
+#authorization_window .submit-button:hover, #forget_window .submit-button:hover, #authorization_window .submit-button:active, #forget_window .submit-button:active{
+	box-shadow: 0 0px #3776ad;
+	top: 2px;
+	color: #fff;
+}
+#authorization_window a{
+	color: #418bca;
+	text-decoration: underline;	
+	vertical-align: -15px;
+}
+#authorization_window a:hover{
+	color: #336c9e;
+	text-decoration: none;
+	cursor: pointer;
+}
+#forget_window{
+	background: #fff;
+	width:530px;
+	height:400px;
+	position: relative; 
+	border-radius: 10px;
+	overflow: hidden;
+}
+#forget_window .logo{
+	text-align: center;
+	padding-top: 35px;
+}
+#forget_window .col-1{
+	text-align: center;
+}
+#forget_window .forget{
+	width:360px;
+	margin: 0 auto;
+}
+#forget_window .col-2{
+	display: none;
+	clear: both;
+}
+#forget_window .col-2 img{
+	margin: 70px auto 40px;
+	display: block;
+}
+#fancybox-content>div{
+	overflow: hidden !important;
+}
+#fancybox-close{
+	display: none !important;	
+}
+#forget_window h2{
+	margin-bottom: 10px;
+}
+.footer-info{
+	font-size: 15px;
+	text-align: center;
+	position: absolute;
+	color: #fff;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	margin:auto;
+}
+
+#demo-canvas{
+	width:100% !important;
+}
+
+
+@media (max-width: 999px){
+	html{min-height: 750px;}
+	#authorization_window, #my-content{
+		width:500px;
+		height: 666px;
+	}
+	#authorization_window .col-1, #authorization_window .col-2{
+		width: 100%;
+	}
+	#authorization_window .col-1{
+		border: none;
+		padding-left: 0;
+	}
+	.login, .pass{
+		width: 330px;
+		margin: 0 auto;
+	}
+	#authorization_window .col-2 .vk{
+		margin-left: 100px;
+	}
+	#authorization_window .submit-button{
+		margin: 25px 30px 0 80px;
+	}
+	#authorization_window h1{
+		margin-top: 20px;
+		margin-bottom: 0;
+		font-size: 32px;
+	}
+	#authorization_window .col-2{
+		padding-top: 0;
+	}
+	#authorization_window .submit-button {
+		margin-top: 15px;
+	}
+	.col-2 p{
+		padding: 0 45px;
+	}
+	/*#large-header{
+		display: none; 
+	}*/
+	#forget_window, #my-content-2{
+		width:450px;	
+	}
+	#forget_window h3{
+		padding-left:20px; 
+		padding-right:20px; 
+		line-height: 40px;
+	}
+	.sign_up{line-height: 12px;}
+	#authorization_window .sign_up a{vertical-align: top;}
+}
+@media (max-width: 580px){
+	#authorization_window, #my-content{
+		width:350px;
+		height: 642px;
+	}
+	#authorization_window p{
+		margin: 10px 0;
+		font-size: 13px;
+	}
+	#authorization_window .col-1, #authorization_window .col-2{
+		margin-top: 0;
+	}
+	#authorization_window h1, #forget_window h2, #forget_window h3{
+		font-size: 30px;
+		margin: 10px 0 0 0;
+	}
+	#authorization_window .submit-button {
+		margin-left: 10px;
+	}
+	#authorization_window .col-2 {
+		padding: 15px 10px 20px;
+	}
+	#authorization_window .col-2 p {
+		padding: 0;
+	}
+	#authorization_window .col-2 .vk {
+		margin-left: 50px;
+	}
+	#fancybox-wrap{
+		/*left: 0 !important;*/
+	}
+	#forget_window, #my-content-2{
+		width:350px;
+		height:350px;	
+	}
+	#forget_window h2{
+		margin-top: 20px;
+		margin-bottom: 0;
+	}
+	#forget_window .submit-button{
+		margin: 15px auto 0;
+	}
+	.wrapper{
+		/*min-height: 768px;*/
+	}
+	#forget_window input[type='email'] {
+		width: 220px;
+	}
+	#forget_window .forget {
+		width: 300px;
+	}
+	#forget_window .col-2 img {
+		margin: 30px auto 20px;
+	}
+	
+}
+@media (max-width: 479px){
+	#authorization_window, #my-content{
+		width:240px;
+		height: 577px;
+	}
+	html {min-height: 660px;}
+	#forget_window, #my-content-2{
+		width:240px;
+		height: 250px; 
+	}
+	#authorization_window .logo img, #forget_window .logo img{
+		width: 100px;
+	}
+	#authorization_window h1, #forget_window h2, #forget_window h3 {
+		font-size: 20px;
+		line-height: 20px;
+		margin-top: 10px;
+	}
+	#authorization_window .logo, #forget_window .logo{
+		padding-top: 15px;
+	}
+	#authorization_window input[type='text'], #forget_window input[type='text'], #forget_window input[type='email']{
+		width: 154px;
+		padding-left:60px;
+		margin: 20px 0 0px;
+	}
+	#authorization_window input[type='text'], #forget_window input[type='text']{
+		width: 142px;
+	}
+	#authorization_window input[type='text']{
+		margin: 0;
+	}
+	.login:before, .forget:before{top: 1px;}
+	 .pass:before{top:11px;}
+	#forget_window .submit-button{
+		font-size: 16px;
+		width: 120px;
+	}
+	#authorization_window input[type='password']{
+		width: 141px;
+		padding-left:60px;
+		margin: 10px 0 0;
+	}
+	#authorization_window .col-1{
+		margin-left: 10px;
+	}
+	#authorization_window .col-2{
+		margin-left: 10px;
+	}
+	#forget_window .submit-button {
+		width: 170px;
+		margin-top: 30px;
+	}
+	#authorization_window .col-1 a{
+		padding-left: 35px;
+	}
+	#authorization_window .col-2 {
+		padding: 0 10px 20px;
+	}
+	#authorization_window .col-2 p{
+		font-size: 12px;
+	line-height: 16px;
+	}
+	#authorization_window .col-2 .vk {
+	 	margin-left: 20px;
+	}	
+	#authorization_window .col-2 a{
+		margin-right: 5px;
+	}
+	#forget_window .forget {
+		width: 200px;
+		margin: 0 0 0 5px;
+	}
+	#authorization_window .submit-button {
+		margin-left: 30px;
+	}
+	#authorization_window .col-1 a{
+		margin-left: 10px;
+	}
+	#forget_window .col-2 img {
+		margin: 30px auto 20px;
+	}
+	.login, .pass{
+		width:240px;
+	}
+	#my-content, #my-content-2{
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: auto;
+		margin: auto;
+	}
+	#my-content, #my-content-2{
+		margin-bottom: 20px;
+		position: static;
+			
+	}
+	.footer-info{
+		line-height: 20px;
+		position: static;
+		margin-bottom: 10px;
+	}
+}

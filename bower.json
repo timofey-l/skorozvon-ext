@@ -1,0 +1,16 @@
+{
+  "name": "skorozvon-ext",
+  "version": "0.0.0",
+  "authors": [
+    "Timofey Lyzhenkov <timofeylyzhenkov@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true
+}

@@ -1,0 +1,145 @@
+<link rel="stylesheet" type="text/css" href="css/settings.css" media="all" />
+<style>.container, #large-header, html{min-height: 1110px !important;}</style>
+<div id="content" class="window-sett">
+	<div class="settings">
+		<span class="language"
+              ng-class="{'en': settings.lang == 'en', 'ru': settings.lang == 'ru'}"
+                ng-click="changeLang()">
+            <img class="eng" src="img/angl.png" alt="" />
+            <img class="rus" src="img/rus.png" alt="" />
+        </span>
+
+    	<h1><img src="img/small-logo.png" alt=""> {{t('settings_title')}}</h1>
+    	<div class="info">
+	    	<div>
+	    		<div class="ava"><img src="{{primaApi.user.lk_avatar_url}}" ng-show="primaApi.user.lk_avatar_url" alt="" style="max-width: 62px; max-height: 62px;"/></div>
+	    		<span class="label">{{t('settings_username_title')}}: </span><span class="value">{{primaApi.user.name}}</span>
+	    		<a class="showAuth" href="#/login" >{{t('settings_enter_other_credentails')}}</a>
+	    	</div>
+	    	<div>
+	    		<span class="label">{{t('settings_title')}}: </span><span class="value">{{primaApi.user.balance}}</span>
+	    		<a class="label top_up" href="http://office.primatel.ru/payments/new">{{t('settings_add_funds')}}</a>
+	    	</div>
+	    	<div>
+	    		<span class="label">{{t('settings_online_shop')}}</span><a class="enter-button" ng-click="enterCatalog()">{{t('enter')}}</a>
+	    	</div>
+	    </div>
+	    <div class="selection">
+	    	<div class="call-type" ng-click="settings.call_type = 1">WEB phone</div>
+	    	<div class="radio " ng-class="{checked:settings.call_type == 1}" ng-click="settings.call_type = 1">WEB phone</div>
+	    	<div class="call-type" ng-click="settings.call_type = 2">SOFTphone</div>
+	    	<div class="radio"  ng-class="{checked:settings.call_type == 2}" ng-click="settings.call_type = 2">SOFT phone</div>
+	    	<div class="call-type" ng-click="settings.call_type = 3">CALL BACK</div>
+	    	<div class="radio radio3"  ng-class="{checked:settings.call_type == 3}" ng-click="settings.call_type = 3">CALL BACK</div>
+            <div class="input-wrap callback-phone" ng-class="{enter:settings.call_type == 3}">
+                <input type="tel" ng-model="settings.default_phone" id="defaultPhone" name="defaultPhone" placeholder="{{t('enter_phone_number')}}"/>
+            </div>
+	    </div>
+        <div class="group-block">
+            <div class="record">
+                <div class="label">{{t('record_calls')}}</div>
+                <div class="switch" ng-class="{on:settings.recordCalls,off:!settings.recordCalls}" ng-click="triggerCallRecord()">
+                    <div style="opacity:0" class="loading_callrecord">
+                        <ul class="loader">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="delay">
+                <div class="input-label label-popupDisplay">
+                    {{t('popup_delay')}}
+                </div>
+                <div class="input-wrap popupDelay-wrap">
+                    <input type="text" nng-model="bg.settings.popupDelay" id="popupDelay" name="popupDelay"/>
+                </div>
+            </div>
+            <div class="country">
+                <div class="input-label label-defaultCountry">
+                    {{t('default_country')}}
+                </div>
+                <div class="input-wrap defaultCountry-wrap">
+                    <select name="defaultCountry" id="defaultCountry" ng-model="settings.defaultCountry" ng-options="c.name for c in arrCountries">
+                        <option value="">{{t('choose_country')}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="group-block">
+            <ul class="settings-block2">
+                <li>
+                    <div class="integration">{{t('crm_integration')}}</div>
+                    <div class="crm">
+                        <a class="crm-logo" href="#"><img src="/img/gis.png" alt="2gis"/></a>
+                        <a class="crm-link" href="#">2gis.ua</a>
+                        <div class="switch" ng-class="{on:bg.settings.recordCalls,off:!bg.settings.recordCalls}" ng-click="triggerCallRecord()">
+                            <div style="opacity:0" class="loading_callrecord">
+                                <ul class="loader">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+                <li>
+                    <div class="crm">
+                        <div class="setting-option" ng-bind-html="t('enable_notify')">
+
+                        </div>
+                        <div class="switch" ng-class="{on:bg.settings.recordCalls,off:!bg.settings.recordCalls}" ng-click="triggerCallRecord()">
+                            <div style="opacity:0" class="loading_callrecord">
+                                <ul class="loader">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="crm">
+                        <div class="setting-option" ng-bind-html="t('enable_notify')"></div>
+                        <div class="switch" ng-class="{on:bg.settings.recordCalls,off:!bg.settings.recordCalls}" ng-click="triggerCallRecord()">
+                            <div style="opacity:0" class="loading_callrecord">
+                                <ul class="loader">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="crm">
+                        <div class="setting-option" ng-bind-html="t('exec_command')">
+                        </div>
+                        <div class="switch" ng-class="{on:bg.settings.recordCalls,off:!bg.settings.recordCalls}" ng-click="triggerCallRecord()">
+                            <div style="opacity:0" class="loading_callrecord">
+                                <ul class="loader">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="complete-command" type="text" placeholder="{{t('enter_command')}}"/>
+                    <a class="add-button" href="#">{{t('add_command')}}</a>
+                </li>
+            </ul>
+
+
+        </div>
+	    <div class="save-settings-button-container">
+		    <button ng-click="saveAndClose()" class="save-settings-button">{{t('save_settings')}}</button>
+		</div>
+	</div>
+</div>

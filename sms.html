@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/sms.css"/>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="functions.js"></script>
+    <script src="PhoneFormat.js"></script>
+    <script src="js/langs.js"></script>
+    <script src="js/sms.js"></script>
+    <title>Primatel SMS</title>
+    <script src="js/background_connection.js"></script>
+</head>
+<body>
+<input type="hidden" id="language" value="ru"/>
+<div class="wrap">
+    <div>
+        <h1 data-text-id="title">Отправить SMS</h1>
+
+        <div class="phone_container">
+            <input id="phone" class="phone_number" value="">
+        </div>
+        <div class="meassage_container">
+            <textarea name="message" id="sms_message" cols="30" rows="10"></textarea>
+        </div>
+        <div class="buttons">
+            <button data-text-id="send" class="button-send">Отправить</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

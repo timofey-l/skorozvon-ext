@@ -1,0 +1,30 @@
+<link rel="stylesheet" type="text/css" href="css/registration.css" media="all" />
+<style>.container, #large-header, html{min-height: 800px !important;}</style>
+<div id="confirm_registration">
+	<div class="inside_confirm">
+		<div class="logo">
+	    	<img src="img/logo_auth.png" alt="Прима телеком">
+		</div>
+		<h4>Подтверждение адреса электронной почты</h4>
+		<p>Ваши регистрационные данные получены.</p>
+		<p>В ближайшее время к Вам прийдет проверочное электронное письмо с кодом подтверждения для продолжения процедуры регистрации. </p>
+		<p>Для проверки кода потребуется перейти по ссылке из письма или ввести код из письма в форму по ссылке.</p>
+		<form action="#">
+			<div id="mphone" class="email-c">
+				<div class="i-email">
+						<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						  width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+						<polygon points="52.303,56.764 18.936,27.462 85.669,27.462 "/>
+						<polygon points="39.011,50.415 15.627,70.95 15.627,29.88 "/>
+						<polygon points="42.042,53.077 52.303,62.087 62.562,53.077 85.689,73.387 18.915,73.387 "/>
+						<polygon points="65.593,50.416 88.979,29.88 88.979,70.95 "/>
+						</svg>
+					</div>
+				<input type="text" name="reg_cofirm_code" ng-model="reg_cofirm_code" placeholder="Код из письма">
+			</div>
+			<div>
+	       <input type="button"  id="confirm" ng-click="sendEmailConfirm()" class="reg_confirm_button" value="Подтвердить"> 
+	    </div>
+		</form>
+	</div>
+</div>

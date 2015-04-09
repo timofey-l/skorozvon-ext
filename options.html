@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru" ng-csp ng-app="optionsApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="functions.js"></script>
+    <script src="PhoneFormat.js"></script>
+    <script src="cryptoJS/rollups/tripledes.js"></script>
+    <script src="js/langs.js"></script>
+
+    <script src="js/options.js"></script>
+    <script src="js/options-angular.js"></script>
+
+    <link rel="stylesheet" href="bower_components/angular/angular-csp.css"/>
+
+    <title>PrimaTelecom Настройки</title>
+</head>
+<body >
+<div id="large-header" class="large-header" style="height: 775px;">
+    <canvas id="demo-canvas"></canvas>
+    <div class="container" ng-view></div>
+
+</div>
+
+<script src="js/options-angular.js"></script>
+<script type="text/javascript" src="js/scripts-background.js"></script>
+</body>
+</html>

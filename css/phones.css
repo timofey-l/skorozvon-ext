@@ -1,0 +1,191 @@
+body {
+    width: 408px;
+    padding-top: 76px;
+}
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400&subset=latin,cyrillic-ext);
+* {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.phon_list{
+	background: #fff;
+	padding: 0 5px 1px 5px;
+	/*background: #92c7d6;
+	background-image: -webkit-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+	background-image: -moz-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+	background-image: -o-radial-gradient(top, circle cover, #97d0e1, #427388 80%);
+	background-image: radial-gradient(top, circle cover, #97d0e1, #427388 80%);*/
+}
+.top {
+    position: fixed;
+    top: 4px;
+    width: 406px;
+    height: 68px;
+    background: #fff;
+    font-size: 15px;
+    line-height: 30px;
+    color: #000;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid #c7c7c7;
+    /*background: #e4eaef;
+    border-bottom: 1px solid #ccc; */
+    /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #ededed)); */
+    /* background: -webkit-linear-gradient(top, #ffffff 0%, #ededed 100%); */
+    z-index: 9999;
+}
+/*
+.settings-button {
+    width: 55px;
+    height: 43px;
+    background-image: url('/img/button_settings.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.settings-button:hover {
+    background-image: url('/img/button_settings.png');
+}
+
+.settings-button:active {
+    background-position: 59% 59%;
+} */
+.settings-button{
+	width: 38px;
+    height: 38px;
+	cursor: pointer;
+	outline: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: url('/img/phones.png') no-repeat #418bca;
+    background-position: 7px -119px; 
+	box-shadow: 0 2px #3776ad;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	box-sizing: border-box;
+    display: inline-block;
+    margin: 16px 15px 0 0;
+}
+.settings-button:hover{
+	text-decoration: none;
+	color: #fff;
+	box-shadow: 0 1px #3776ad;
+	top: 1px;
+}
+.settings-button:active{
+	box-shadow: 0 0 #3776ad;
+	top: 2px;
+}
+.top .login {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 3px 60px 0px 35px;
+    background: url('/img/phones.png') no-repeat;
+    background-position: 14px 10px;
+}
+.top .balance {
+    padding: 1px 60px 0px 35px;
+    background: url('/img/phones.png') no-repeat;
+    background-position: 18px -24px;
+}
+.top label{padding: 0 10px 0 0;}
+.top .balance .value, .top .login .username {
+    /* text-shadow: 0px 1px 0px rgba(255, 255, 255, 1); */
+}
+.wrap .phone {
+    vertical-align: middle;
+    line-height: 68px;
+    height: 68px;
+    font-size: 23px;
+    margin: 3px 0 5px 0;
+    padding: 0;
+    padding-left: 20px;
+    border: 1px solid #c7c7c7;
+    background: #fff;
+}
+.wrap .phone:last-child{
+	-webkit-border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	border-radius: 0 0 10px 10px;
+}
+.buttons * {
+    font-size: 10px;
+}
+
+.phone {
+    position: relative;
+    height: 25px;
+    /* font-weight: bold; */
+    line-height: 25px;
+}
+
+.buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    /* width: 100%; */
+    line-height: 1;
+    margin: 17px 15px 0 0;
+}
+.button{
+	border: none;
+	font: bold 25px/1 'Open Sans', sans-serif;
+	color: #fff;
+	cursor: pointer;
+	/* padding: 15px;*/
+	outline: none;
+	position: relative;
+	outline: none;
+	background: #418bca;
+	box-shadow: 0 2px #3776ad;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	box-sizing: border-box;
+	text-align: center;
+    vertical-align: top;
+    display: inline-block;
+    margin: 0;
+}
+.button:hover{
+	text-decoration: none;
+	color: #fff;
+	box-shadow: 0 1px #3776ad;
+	top: 1px;
+}
+.button:active{
+	box-shadow: 0 0 #3776ad;
+	top: 2px;
+}
+.button.btn_sms {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+   	background: url('/img/phones.png') no-repeat #418bca;
+    background-position: 6px -59px;
+}
+
+.button.btn_phone {
+    background: url('/img/phones.png') no-repeat #418bca;
+    background-position: 7px -91px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    line-height: 1;
+    margin: 0 8px 0 0;
+}
+.top .need-setup {
+    font-size: 14px;
+	margin: 22px 60px 0 10px;
+    cursor: default;
+}

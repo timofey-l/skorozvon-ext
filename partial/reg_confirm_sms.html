@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="css/registration.css" media="all" />
+<style>.container{min-height: 610px;height: 100%;}</style>
+<div id="confirm_telephone">
+	<div class="inside_confirm">
+		<div class="logo">
+	    	<img src="img/logo_auth.png" alt="Прима телеком">
+		</div>
+		<h4>Подтверждение номера телефона</h4>
+		<p>На указанный Вами телефон было отправлено SMS-сообщение с кодом подтверждения.</p>
+		<p>После проверки кода SMS будет произведена регистрация пользователя в системе PRIMATELECOM. <br/>Процесс регистрации займет несколько секунд, в это время браузер будет ожидать ответа от сервера.</p>
+		<form action="#">
+			<div id="mphone" class="email-c">
+				<div class="i-phone">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							  width="15.54px" height="27.441px" viewBox="0 0 15.54 27.441" enable-background="new 0 0 15.54 27.441" xml:space="preserve">
+							<path d="M13.543,0H1.997C0.892,0,0,0.896,0,1.999v23.445c0,1.103,0.892,1.997,1.997,1.997h11.546c1.103,0,1.996-0.895,1.996-1.997
+							 V1.999C15.54,0.896,14.646,0,13.543,0z M4.921,1.214h5.701c0.144,0,0.26,0.215,0.26,0.48c0,0.267-0.116,0.482-0.26,0.482H4.921
+							 c-0.145,0-0.26-0.216-0.26-0.482C4.661,1.429,4.776,1.214,4.921,1.214z M7.771,25.469c-0.703,0-1.275-0.572-1.275-1.276
+							 c0-0.703,0.572-1.273,1.275-1.273c0.701,0,1.272,0.57,1.272,1.273C9.043,24.897,8.472,25.469,7.771,25.469z M14.043,21.1H1.497
+							 V3.373h12.546V21.1z"/>
+						</svg>
+					</div>
+				<input type="text" name="reg_cofirm_code" ng-model="reg_cofirm_code" placeholder="SMS код">
+			</div>
+				<input id="confirm_sms" type="button" ng-click="sendSMSConfirm()" class="reg_confirm_button" value="Подтвердить"> 
+		</form>
+	</div>
+</div>
