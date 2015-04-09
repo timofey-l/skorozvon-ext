@@ -299,8 +299,15 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
                 }
             });
         }
-
     };
+
+    $scope.$watch('primaApi._settings.recieve_incoming_messages', function (newV, oldV) {
+        if (newV) {
+            $scope.primaApi.enableListenEvents();
+        } else {
+            $scope.primaApi.disable();
+        }
+    });
 
     /**
      * Сохранить и выйти

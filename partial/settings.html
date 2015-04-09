@@ -115,14 +115,14 @@
                              ng-click="primaApi._settings.recieve_incoming_messages = !primaApi._settings.recieve_incoming_messages">
                         </div>
                     </div>
-                    <div class="crm">
+                    <div class="crm" ng-show="primaApi._settings.recieve_incoming_messages">
                         <div class="setting-option" ng-bind-html="t('show_notify')"></div>
                         <div class="switch"
                              ng-class="{on:primaApi._settings.show_notify,off:!primaApi._settings.show_notify}"
                              ng-click="primaApi._settings.show_notify = !primaApi._settings.show_notify">
                         </div>
                     </div>
-                    <div class="crm">
+                    <div class="crm" ng-show="primaApi._settings.recieve_incoming_messages">
                         <div class="setting-option" ng-bind-html="t('exec_command')">
                         </div>
                         <div class="switch"
@@ -130,8 +130,11 @@
                              ng-click="primaApi._settings.exec_command = !primaApi._settings.exec_command">
                         </div>
                     </div>
-                    <input class="complete-command" type="text" placeholder="{{t('enter_command')}}"/>
-                    <a class="add-button" href="#">{{t('add_command')}}</a>
+                    <div ng-show="primaApi._settings.recieve_incoming_messages">
+
+                        <input class="complete-command" type="text" placeholder="{{t('enter_command')}}"/>
+                        <a class="add-button" href="#">{{t('add_command')}}</a>
+                    </div>
                 </li>
             </ul>
 

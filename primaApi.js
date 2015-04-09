@@ -4,10 +4,12 @@ PrimaApi = (function () {
     function PrimaApi() {
         var self = this;
         this.user = null;
+        this.ws = null;
 
         this._defaults = {
             apiUrl: "http://tp-api.primatel.ru/",
             svcUrl: "http://tp-svc.primatel.ru/",
+            ws_url: 'ws://dapi.primatel.ru',
             mode: 'json',
             lang: 'ru',
             sip_login: '',
@@ -38,6 +40,132 @@ PrimaApi = (function () {
     }
 
     /**
+     * Обработка входящих по WebSockets сообщений
+     * @param event
+     */
+    PrimaApi.prototype.wsConnectionOnMessage = function (event) {
+        logG("WebSockets message recieved", event);
+        var opt = {
+            type: "basic",
+            title: t('notify_title'),
+            message: t('notify_text').replace(/:phone/g, event.phone1),
+            iconUrl: chrome.extension.getURL('icon48.png')
+        };
+        chrome.notifications.create('', opt, function(id){});
+    };
+
+    /**
+     * Обработка ошибок WebSockets
+     * @param event
+     */
+    PrimaApi.prototype.wsConnectionOnClose = function (event) {
+        logG("WebSockets error!", event);
+        if (background.primaApi._settings.recieve_incoming_messages) {
+            var timeInterval = Math.round(Math.random() * 14 * 1000) + 1000;
+
+            setTimeout(function () {
+                background.primaApi.enableListenEvents();
+            }, timeInterval);
+        }
+    };
+
+    /**
+     * Включение входящих сообщений
+     * @param callback
+     */
+    PrimaApi.prototype.enableListenEvents = function (callback) {
+        var self = this;
+        if (!this._settings.recieve_incoming_messages) {
+            this._settings.recieve_incoming_messages = true;
+        }
+        this.wsConnect(function (result) {
+            if (result === false) {
+                // пытаемся переконнектиться по истечению произвольного промежутка времени в пределах
+                // 1..15 секунд, при условии что в настройках включена соотв. опция
+                if (self._settings.recieve_incoming_messages) {
+                    var timeInterval = Math.round(Math.random() * 14 * 1000) + 1000;
+
+                    setTimeout(function () {
+                        if (self._settings.recieve_incoming_messages)
+                            self.enableListenEvents();
+                    }, timeInterval);
+                }
+                if (callback) callback(false);
+            } else if (typeof result == 'object') {
+                self._settings.recieve_incoming_messages = true;
+                self.ws = result;
+                self.ws.onmessage = self.wsConnectionOnMessage;
+                self.ws.onclose = self.wsConnectionOnClose;
+                if (callback)
+                    callback();
+            }
+            //if (callback) callback(result);
+        });
+
+    };
+
+    /**
+     * Выключение WebSockets подключения
+     * @param callback
+     */
+    PrimaApi.prototype.disableListenEvents = function (callback) {
+        if (background.primaApi._settings.recieve_incoming_messages === false) {
+            if (callback) callback(true);
+        }
+        background.primaApi._settings.recieve_incoming_messages = false;
+        if (background.primaApi.ws) background.primaApi.ws.close();
+        if (callback) callback(true);
+    };
+
+    /**
+     * Соединение по WebSockets для получения сообщений
+     * @param callback
+     * @returns {*}
+     */
+    PrimaApi.prototype.wsConnect = function (callback) {
+        var data, self;
+        self = this;
+        data = {
+            sip_login: this._settings.sip_login,
+            sip_password: this._settings.sip_password,
+            type: 'incoming'
+        };
+        return this.DoRequest({
+            svc: 'eventRegisterReceiver',
+            sign: true,
+            data: data,
+            onSuccess: function (response) {
+                var wsc;
+                if (response.result === 1) {
+                    wsc = new WebSocket(self._settings.ws_url);
+                    wsc.onopen = function () {
+                        wsc.send(JSON.stringify({
+                            svc: "setup",
+                            lang: self.lang
+                        }));
+                        wsc.send(JSON.stringify({
+                            svc: "registerReceiver",
+                            code: response.data.code
+                        }));
+                        if (callback) {
+                            return callback(wsc);
+                        }
+                    };
+                    return wsc.onerror = function () {
+                        if (callback) {
+                            return callback(false);
+                        }
+                    };
+                } else {
+                    if (callback) {
+                        return callback(false);
+                    }
+                }
+            }
+        });
+    };
+
+    /**
      * Отключение услуги
      * @param opt
      * @returns {*}
@@ -66,11 +194,13 @@ PrimaApi = (function () {
                             service: opt.service
                         },
                         onSuccess: function (response) {
-                            self.getServices({onSuccess:function(r){
-                                if (typeof opt.onSuccess === 'function') {
-                                    return opt.onSuccess(response);
+                            self.getServices({
+                                onSuccess: function (r) {
+                                    if (typeof opt.onSuccess === 'function') {
+                                        return opt.onSuccess(response);
+                                    }
                                 }
-                            }});
+                            });
                         }
                     });
                 }
@@ -87,8 +217,10 @@ PrimaApi = (function () {
     PrimaApi.prototype.isServiceEnabled = function (service, callback) {
         var self = this;
         this.getServices({
-            onSuccess: function(r) {
-                if (callback) callback(_.find(self._services, function (el) { return el.service == service; }) || false)
+            onSuccess: function (r) {
+                if (callback) callback(_.find(self._services, function (el) {
+                    return el.service == service;
+                }) || false)
             }
         });
     };
@@ -123,11 +255,13 @@ PrimaApi = (function () {
                             service: opt.service
                         },
                         onSuccess: function (response) {
-                            self.getServices({onSuccess:function(r){
-                                if (typeof opt.onSuccess === 'function') {
-                                    return opt.onSuccess(response);
+                            self.getServices({
+                                onSuccess: function (r) {
+                                    if (typeof opt.onSuccess === 'function') {
+                                        return opt.onSuccess(response);
+                                    }
                                 }
-                            }});
+                            });
                         }
 
                     });
@@ -157,7 +291,9 @@ PrimaApi = (function () {
                 if (r.result == 1)
                     self._services = r.data;
 
-                var rc = _.find(self._services, function (el) { return el.service == 'call-recording'; });
+                var rc = _.find(self._services, function (el) {
+                    return el.service == 'call-recording';
+                });
                 if (rc) {
                     self._settings.record_calls = true;
                 } else {
