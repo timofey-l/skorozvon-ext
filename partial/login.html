@@ -1,37 +1,47 @@
 <link rel="stylesheet" href="css/options.css"/>
-		<div id="my-content">
-		 <div id="authorization_window">
-		 		<span class="language en"><img class="eng" src="img/angl.png" alt="" /><img class="rus" src="img/rus.png" alt="" /></span>
-				<div class="logo">
-		    		<img src="img/logo_auth.png" alt="Прима телеком">
-				</div>
-				<h1>Вход</h1>
-				<p>Авторизация в системе PRIMATELECOM <br />Вы можете использовать данные аккаунта PRIMATELECOM</p>
-				<div class="error" ng-show="errors.login.length >0">{{ errors.login }}</div>
-				<form action="#">
-				<div class="col-1">
-					<div id="login" class="login">
-						<input type="text" name="login" ng-model="auth.login" placeholder="Введите логин"  autofocus/>
-					</div>
-					<div class="pass">
-						<input type="password" name="password" ng-model="auth.password"  placeholder="Введите пароль"/>
-					</div>
-					<a href="" class="login-next-button submit-button" ng-click="login()">Войти</a>
-					<a id="forget_pass" href="#">Забыли пароль?</a> 
-				</div>
-				</form>
-				<div class="col-2">
-					<p>Вы также можете воспользоваться своим логином на одном из популярных сайтов:</p>
-					<a class="vk" href="#"></a>
-					<a class="fb" href="#"></a>
-					<a class="google" href="#"></a>
-					<a class="odn" href="#"></a>
-					<a class="prima" href="#"></a>
-				</div>
-				<div class="sign_up"><a href="#/register">Зарегистрироваться</a></div>
-				
-				
-		   	</div>
-		</div>
-		<p class="footer-info">© ПримаТелеком, 2014</p>
+<div id="my-content">
+    <div id="authorization_window">
+        <span class="language"
+              ng-class="{'en': settings.lang == 'ru', 'ru': settings.lang == 'en'}"
+              ng-click="changeLang()">
+            <img class="eng" src="img/angl.png" alt=""/>
+            <img class="rus" src="img/rus.png" alt=""/>
+        </span>
+
+        <div class="logo">
+            <img src="img/logo_auth.png" alt="Прима телеком">
+        </div>
+        <h1>{{t('login_title')}}</h1>
+
+        <p ng-bind-html="t('login_text')"></p>
+
+        <div class="error" ng-show="errors.login.length >0">{{ errors.login }}</div>
+        <form action="#">
+            <div class="col-1">
+                <div id="login" class="login">
+                    <input type="text" name="login" ng-model="primaApi._settings.sip_login"
+                           placeholder="{{t('login_sip_login')}}" autofocus/>
+                </div>
+                <div class="pass">
+                    <input type="password" name="password" ng-model="primaApi._settings.sip_password"
+                           placeholder="{{t('login_sip_password')}}"/>
+                </div>
+                <a href="" class="login-next-button submit-button" ng-click="login()">{{t('login_button_title')}}</a>
+                <a id="forget_pass" href="#">{{t('login_forgot_password')}}</a>
+            </div>
+        </form>
+        <div class="col-2">
+            <p>{{t('login_social_text')}}</p>
+            <a class="vk" href="" ng-click="loginSocial('vk')" ></a>
+            <a class="fb" href="" ng-click="loginSocial('facebook')"></a>
+            <a class="google" href="" ng-click="loginSocial('google')"></a>
+            <a class="odn" href="" ng-click="loginSocial('odnoklassniki')"></a>
+            <a class="prima" href=""></a>
+        </div>
+        <div class="sign_up"><a href="#/register">{{t('login_register')}}</a></div>
+
+
+    </div>
+</div>
+<p class="footer-info">{{t('reg_copyright')}}</p>
 </div>

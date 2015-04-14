@@ -32,6 +32,16 @@ function inject_new(element) {
             i += inject_new(element.childNodes[i]);
         }
     } else {
+        // проверим на наличие телефона международном формате
+        var re = RegExp('[+]?([\\s\\-()]{0,2}\\d){11,12}','gmi');
+        //var re = /([ ()+-\s]{0,3}\d){11,12}/gmi;
+        var phone = re.exec(element.textContent);
+        if (phone != null) {
+            var w_el = wrap(element, phone);
+            addHover(w_el, phone[0]);
+            return 1;
+        }
+
         // проверим на наличие телефона в локальном формате
         var re = RegExp('([\\D]{0,2}\\d){' + (primatel.number_length) + '}','gmi');
         //var re = /([ ()+-\s]{0,3}\d){11,12}/gmi;
@@ -42,15 +52,6 @@ function inject_new(element) {
             return 1;
         }
 
-        // проверим на наличие телефона международном формате
-        var re = RegExp('[+]?([\\s\\-()]{0,2}\\d){11,12}','gmi');
-        //var re = /([ ()+-\s]{0,3}\d){11,12}/gmi;
-        var phone = re.exec(element.textContent);
-        if (phone != null) {
-            var w_el = wrap(element, phone);
-            addHover(w_el, phone[0]);
-            return 1;
-        }
     }
     return 0;
 }

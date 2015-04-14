@@ -3,13 +3,21 @@ var PrimaApi;
 PrimaApi = (function () {
     function PrimaApi() {
         var self = this;
+
+        // информация о пользователе
         this.user = null;
+
+        // соединение для приема входящих сообщений
         this.ws = null;
+
+        // таймер для посылки PING что бы не закрывалось соединение
+        this.keepAliveInterval = null;
 
         this._defaults = {
             apiUrl: "http://tp-api.primatel.ru/",
             svcUrl: "http://tp-svc.primatel.ru/",
             ws_url: 'ws://dapi.primatel.ru',
+            ws_ping_interval: 50 * 1000, // в милисекундах секундах
             mode: 'json',
             lang: 'ru',
             sip_login: '',
@@ -27,31 +35,195 @@ PrimaApi = (function () {
         this.loginAPI(null, {
             onSuccess: function (response) {
                 self.sid = response.data.sid;
-                self.getFullUserInfo();
-                self.getServices({
-                    onSuccess: function (r) {
-                        if (r.result == 1) {
-                            self._services = r.data;
-                        }
-                    }
-                });
+                self.loginUser();
             }
         });
     }
+
+    /**
+     * Регистрация пользователя
+     * @param data
+     * @param callback
+     */
+    PrimaApi.prototype.register = function (data, callback) {
+        var _data = {
+            login: '',
+            family_name: '',
+            name: '',
+            phone: '',
+            email: '',
+            currency: ''
+        };
+        _.extend(_data, data);
+        this.DoRequest({
+            svc: 'regRequest',
+            sign: true,
+            data: _data,
+            onSuccess: function(res) {
+                callback(res);
+            }
+        });
+    };
+
+    /**
+     * Попытка логина через социальную сеть
+     * @param type
+     * @param callback
+     */
+    PrimaApi.prototype.loginSocial = function (type, callback) {
+        this._soc_code = '';
+        this._login_error = '';
+        var self = this;
+        this.getSocailAuthLink({
+            data: {
+                type: type
+            },
+            onSuccess: function (result) {
+                if (result.result == 1) {
+                    self._soc_code = result.data.soc_code;
+                    chrome.windows.create({
+                        type: 'popup',
+                        url: result.data.url
+                    }, function (newWindow) {
+                        var win_id = newWindow.id;
+                        chrome.windows.onRemoved.addListener(function (winId) {
+                            if (winId == win_id) {
+                                self.DoRequest({
+                                    svc: 'socialAuthCheck',
+                                    sign: true,
+                                    data: {
+                                        soc_code: self._soc_code
+                                    },
+                                    onSuccess: function (res) {
+                                        if (res.result == 1) {
+                                            if (res.data.lk_user_id > 0) {
+                                                self.DoRequest({
+                                                    svc: 'listSip2',
+                                                    sign: true,
+                                                    data: {
+                                                        soc_code: self._soc_code
+                                                    },
+                                                    onSuccess: function (res) {
+                                                        if (res.result == 1 && res.data.sip1) {
+                                                            self._settings.sip_login = res.data.sip1;
+                                                            self.DoRequest({
+                                                                svc: 'getSipPassword2',
+                                                                sign: true,
+                                                                data: {
+                                                                    soc_code: self._soc_code,
+                                                                    sip_login: res.data.sip1
+                                                                },
+                                                                onSuccess: function (r) {
+                                                                    if (r.result === 1 && (r.data.password)) {
+                                                                        self._settings.sip_password = r.data.password;
+                                                                        self.saveSettings();
+                                                                        self.loginUser(function (success) {
+                                                                            if (callback) callback(success);
+                                                                        });
+                                                                    } else {
+                                                                        if (callback) callback(false);
+                                                                    }
+                                                                }
+                                                            });
+                                                        } else {
+                                                            if (callback) callback(false);
+                                                        }
+                                                    }
+                                                });
+                                            } else {
+                                                if (callback) callback(false);
+                                            }
+                                        } else {
+                                            if (callback) callback(false);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    });
+                } else {
+                    self._login_error = result.data;
+                    if (callback) callback(false);
+                }
+            }
+        });
+    };
+
+    /**
+     * Получение ссылки и soc_code для авторизации через социальные сети
+     *
+     * @param opts
+     * @returns {*}
+     */
+    PrimaApi.prototype.getSocailAuthLink = function (opts) {
+        if (opts == null) {
+            opts = {};
+        }
+        var _opts = {
+            svc: 'socialAuthGetLoginUrl',
+            sign: true
+        };
+
+        _.extend(_opts, opts);
+
+        return this.DoRequest(_opts);
+
+    };
+
+    /**
+     * Попытка получить данные о пользователе по SIP логину и паролю
+     *
+     * @param callback
+     */
+    PrimaApi.prototype.loginUser = function (callback) {
+        var self = this;
+        if (this._settings.sip_login == '' || this._settings.sip_password == '') {
+            if (callback) callback(false);
+        }
+        this.getFullUserInfo({
+            onSuccess: function (r) {
+                self.getServices({
+                    onSuccess: function (res) {
+                        if (res.result == 1) {
+                            self._services = res.data;
+                            if (self._settings.recieve_incoming_messages)
+                                self.enableListenEvents();
+                            if (callback) callback(true);
+                        } else {
+                            if (callback) callback(false, res.data);
+                        }
+                    }
+                })
+            }
+        });
+    };
 
     /**
      * Обработка входящих по WebSockets сообщений
      * @param event
      */
     PrimaApi.prototype.wsConnectionOnMessage = function (event) {
-        logG("WebSockets message recieved", event);
-        var opt = {
-            type: "basic",
-            title: t('notify_title'),
-            message: t('notify_text').replace(/:phone/g, event.phone1),
-            iconUrl: chrome.extension.getURL('icon48.png')
-        };
-        chrome.notifications.create('', opt, function(id){});
+        logGC("WebSockets message recieved", event);
+        var data = JSON.parse(event.data);
+        if (data.data == 'pong') {
+            log("WebSockets: 'keep-alive' message recieved");
+            return;
+        }
+        if (data.svc && data.svc == 'incoming' && background.primaApi._settings.show_notify) {
+            var opt = {
+                type: "basic",
+                title: formatInternational(background._settings.default_country, "+" + data.number_a),
+                expandedMessage: "sdsd",
+                message: t('notify_text_incoming')
+                    .replace(/:caller/g, formatInternational(background._settings.default_country, "+" + data.number_a))
+                    .replace(/:callee/g, formatInternational(background._settings.default_country, "+" + data.number_b))
+                    .replace(/:time/g, data.time),
+                iconUrl: chrome.extension.getURL('incoming.png')
+            };
+            chrome.notifications.create('', opt, function (id) {
+            });
+        }
+
     };
 
     /**
@@ -60,6 +232,7 @@ PrimaApi = (function () {
      */
     PrimaApi.prototype.wsConnectionOnClose = function (event) {
         logG("WebSockets error!", event);
+        clearInterval(background.primaApi.keepAliveInterval);
         if (background.primaApi._settings.recieve_incoming_messages) {
             var timeInterval = Math.round(Math.random() * 14 * 1000) + 1000;
 
@@ -75,9 +248,11 @@ PrimaApi = (function () {
      */
     PrimaApi.prototype.enableListenEvents = function (callback) {
         var self = this;
-        if (!this._settings.recieve_incoming_messages) {
-            this._settings.recieve_incoming_messages = true;
+        if (self._settings.recieve_incoming_messages && self.ws && self.ws.readyState == WebSocket.OPEN) {
+            if (callback) callback(true);
+            return;
         }
+        this._settings.recieve_incoming_messages = true;
         this.wsConnect(function (result) {
             if (result === false) {
                 // пытаемся переконнектиться по истечению произвольного промежутка времени в пределах
@@ -92,8 +267,19 @@ PrimaApi = (function () {
                 }
                 if (callback) callback(false);
             } else if (typeof result == 'object') {
+                if (self.ws) {
+                    self._settings.recieve_incoming_messages = false;
+                    clearInterval(self.keepAliveInterval);
+                    self.ws.close();
+                }
                 self._settings.recieve_incoming_messages = true;
                 self.ws = result;
+                self.keepAliveInterval = setInterval(function () {
+                    if (self.ws && self.ws.readyState == 1)
+                        self.ws.send(JSON.stringify({svc: 'ping'}));
+                    else
+                        clearInterval(self.keepAliveInterval);
+                }, self._settings.ws_ping_interval);
                 self.ws.onmessage = self.wsConnectionOnMessage;
                 self.ws.onclose = self.wsConnectionOnClose;
                 if (callback)
@@ -462,6 +648,9 @@ PrimaApi = (function () {
             .then(function () {
                 _.extend(res, {pending: false});
                 self.user = res;
+                if (opt.onSuccess) {
+                    opt.onSuccess(true);
+                }
             })
         ;
 

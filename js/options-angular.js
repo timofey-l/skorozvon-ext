@@ -1,5 +1,19 @@
 var background = chrome.extension.getBackgroundPage().background;
+
 var optionsApp = angular.module('optionsApp', ['ngRoute', 'ngSanitize']);
+
+optionsApp.directive('phone', function () {
+    return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ctrl) {
+            if (ctrl) {
+                ctrl.$validators.phone = function(modelValue) {
+                    return ctrl.$isEmpty(modelValue) || isValidNumber(modelValue);
+                }
+            }
+        }
+    }
+});
 
 /**
  * Settings controller
@@ -11,7 +25,7 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
     $scope.settings = background._settings;
     $scope.primaApi = background.primaApi;
 
-    $scope.changeLang = function() {
+    $scope.changeLang = function () {
         if ($scope.settings.lang == 'ru') {
             $scope.settings.lang = 'en';
         } else {
@@ -269,13 +283,13 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
     $scope.arrCountries = arrCountry;
     $scope.getCountry = function (code) {
         var res = null;
-        $.each($scope.arrCountries, function(i, el){
+        $.each($scope.arrCountries, function (i, el) {
             if (el.code == code) res = el;
         });
         return res;
     };
 
-    $scope.triggerCallRecord = function() {
+    $scope.triggerCallRecord = function () {
         $('.switch').animate({opacity: 0.2});
         $('.loading_callrecord').animate({opacity: 1});
         var s = $scope;
@@ -283,7 +297,7 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
         if ($scope.primaApi._settings.record_calls) {
             $scope.primaApi.disableService({
                 service: 'call-recording',
-                onSuccess: function(r) {
+                onSuccess: function (r) {
                     $('.switch.record_calls').animate({opacity: 1});
                     $('.loading_callrecord').animate({opacity: 0});
                     $scope.$digest();
@@ -292,7 +306,7 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
         } else {
             $scope.primaApi.enableService({
                 service: 'call-recording',
-                onSuccess: function(r) {
+                onSuccess: function (r) {
                     $('.switch.record_calls').animate({opacity: 1});
                     $('.loading_callrecord').animate({opacity: 0});
                     $scope.$digest();
@@ -305,17 +319,17 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
         if (newV) {
             $scope.primaApi.enableListenEvents();
         } else {
-            $scope.primaApi.disable();
+            $scope.primaApi.disableListenEvents();
         }
     });
 
     /**
      * Сохранить и выйти
      */
-    $scope.saveAndClose = function() {
+    $scope.saveAndClose = function () {
         background.saveSettings();
         background.primaApi.saveSettings();
-        //window.close();
+        window.close();
     }
 });
 
@@ -323,6 +337,44 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
  * Login controller
  */
 optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $location) {
+    background.primaApi._settings.recieve_incoming_messages = false;
+    background.primaApi.disableListenEvents();
+
+    window.s = $scope;
+    $scope.t = window.t;
+
+    $scope.settings = background._settings;
+    $scope.primaApi = background.primaApi;
+
+    $scope.changeLang = function () {
+        if ($scope.settings.lang == 'ru') {
+            $scope.settings.lang = 'en';
+        } else {
+            $scope.settings.lang = 'ru';
+        }
+    };
+
+    $scope.login = function () {
+        $scope.primaApi.loginUser(function (success, error) {
+            if (success) {
+                $scope.primaApi.saveSettings();
+                window.location.hash = '#/';
+            } else {
+                alert(error);
+            }
+        });
+    };
+
+    $scope.loginSocial = function (type) {
+        $scope.primaApi.loginSocial(type, function (result) {
+            if (result) {
+                window.location.hash = '#/settings';
+            } else {
+                alert(t('login_social_error'));
+            }
+        });
+    };
+
 
 });
 
@@ -330,6 +382,57 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
  * Registration controller
  */
 optionsApp.controller('regCtrl', function ($scope, $route, $routeParams, $location) {
+    window.s = $scope;
+    $scope.t = window.t;
+
+    $scope.classes = function (field_name) {
+        if ($scope.reg_form[field_name])
+            return {
+                invalid: $scope.reg_form[field_name].$invalid && $scope.reg_form[field_name].$touched
+            };
+    };
+
+    $scope.settings = background._settings;
+    $scope.primaApi = background.primaApi;
+
+    $scope.changeLang = function () {
+        if ($scope.settings.lang == 'ru') {
+            $scope.settings.lang = 'en';
+        } else {
+            $scope.settings.lang = 'ru';
+        }
+    };
+
+    $scope.reg_info = {
+        name: '',
+        family_name: '',
+        login: '',
+        phone: '',
+        email: '',
+        currency: ''
+    };
+
+    $scope.agreed = false;
+
+    $scope.register = function () {
+        if ($scope.reg_form.$valid && $scope.agreed) {
+            $scope.primaApi.register($scope.reg_info, function(res){
+
+            });
+        } else {
+            for (prop in $scope.reg_form) {
+                if (!/^\$/.test(prop))
+                    $scope.reg_form[prop].$setTouched();
+            }
+            setTimeout(function(){
+                $('form[name=reg_form] .invalid').addClass('attension');
+                setTimeout(function(){
+                    $('form[name=reg_form] .invalid').removeClass('attension');
+                }, 300);
+            }, 100);
+
+        }
+    }
 
 });
 
@@ -360,7 +463,7 @@ optionsApp.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'partial/reg_confirm_email.html'
         })
         .otherwise({
-            redirectTo: function() {
+            redirectTo: function () {
                 //console.log(window.bg.bg.user);
                 background = chrome.extension.getBackgroundPage().background;
                 if (typeof background == 'object' && typeof background.primaApi.user != 'undefined'

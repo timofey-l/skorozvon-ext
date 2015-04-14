@@ -5,7 +5,7 @@
 <div id="content" class="window-sett">
     <div class="settings">
 		<span class="language"
-              ng-class="{'en': settings.lang == 'en', 'ru': settings.lang == 'ru'}"
+              ng-class="{'en': settings.lang == 'ru', 'ru': settings.lang == 'en'}"
               ng-click="changeLang()">
             <img class="eng" src="img/angl.png" alt=""/>
             <img class="rus" src="img/rus.png" alt=""/>
@@ -22,7 +22,7 @@
                 <a class="showAuth" href="#/login">{{t('settings_enter_other_credentails')}}</a>
             </div>
             <div>
-                <span class="label">{{t('settings_title')}}: </span><span class="value">{{primaApi.user.balance}}</span>
+                <span class="label">{{t('settings_balance')}}: </span><span class="value">{{primaApi.user.balance}}</span>
                 <a class="label top_up" href="http://office.primatel.ru/payments/new">{{t('settings_add_funds')}}</a>
             </div>
             <div>

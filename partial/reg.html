@@ -1,60 +1,70 @@
-<link rel="stylesheet" type="text/css" href="css/registration.css" media="all" />
-<style>.container, #large-header, html{min-height: 995px !important;}</style>
+<link rel="stylesheet" type="text/css" href="css/registration.css" media="all"/>
+<style>.container, #large-header, html {
+    min-height: 995px !important;
+}</style>
 <script type="text/javascript" src="js/registration.js"></script>
-		<div id="my-content">
-		 <div id="authorization_window">
-		 	<span class="language en"><img class="eng" src="img/angl.png" alt="" /><img class="rus" src="img/rus.png" alt="" /></span>
-				<div class="logo">
-		    		<img src="img/logo_auth.png" alt="Прима телеком">
-				</div>
-				<h1>Регистрация в системе PrimaTelekom</h1>
-				<div class="col-wrapp">
-					<div class="tabs">
-						<h2 class="standart"><a href="#">Стандартная <span>регистрация</span></a></h2>
-						<h2 class="social"><a href="#"><span>Регистрация</span> через соц. сеть</a></h2>
-					</div>
-					<form action="#">
-					<div class="col-1">
-						<div class="reg error" ng-show="bg.errors.register.length>0">{{ bg.errors.register }}</div>
-						<div id="name" class="login">
-							<div class="i-person">
-								<svg style="width: 22px !important;height: 22px !important;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<div id="my-content">
+    <div id="authorization_window">
+		 	<span class="language"
+                  ng-class="{'en': settings.lang == 'ru', 'ru': settings.lang == 'en'}"
+                  ng-click="changeLang()">
+            <img class="eng" src="img/angl.png" alt=""/>
+            <img class="rus" src="img/rus.png" alt=""/>
+        </span>
+
+        <div class="logo">
+            <img src="img/logo_auth.png" alt="">
+        </div>
+        <h1>{{t('reg_title')}}</h1>
+
+        <div class="col-wrapp">
+            <div class="tabs">
+                <h2 class="standart"><a href="" ng-bind-html="t('reg_standard_title')"></a></h2>
+
+                <h2 class="social"><a href="" ng-bind-html="t('reg_social_title')"></a></h2>
+            </div>
+            <form name="reg_form">
+                <div class="col-1">
+                    <div class="reg error" ng-show="bg.errors.register.length>0">{{ bg.errors.register }}</div>
+                    <div id="name" class="login" ng-class="classes('name')">
+                        <div class="i-person">
+                            <svg style="width: 22px !important;height: 22px !important;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 								  width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 								<path d="M311.412,351.368c-11.056-1.759-11.308-32.157-11.308-32.157s32.484-32.158,39.564-75.401
 								 c19.045,0,30.809-45.973,11.761-62.148C352.226,164.635,375.91,48,256,48c-119.911,0-96.226,116.635-95.433,133.662
 								 c-19.047,16.175-7.284,62.148,11.762,62.148c7.079,43.243,39.563,75.401,39.563,75.401s-0.252,30.398-11.307,32.157
 								 C164.976,357.034,32,415.685,32,480h224h224C480,415.685,347.024,357.034,311.412,351.368z"/>
 								</svg>
-							</div>
-							<input type="text" placeholder="Имя" name="name" ng-model="bg.reg_info.name" required>
-						</div>
-						<div id="surname" class="login">
-							<div class="i-person">
-								<svg style="width: 22px !important;height: 22px !important;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        </div>
+                        <input type="text" placeholder="{{t('reg_name_title')}}" name="name" ng-model="reg_info.name" required>
+                    </div>
+                    <div id="surname" class="login" ng-class="classes('family_name')">
+                        <div class="i-person">
+                            <svg style="width: 22px !important;height: 22px !important;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 								  width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 								<path d="M311.412,351.368c-11.056-1.759-11.308-32.157-11.308-32.157s32.484-32.158,39.564-75.401
 								 c19.045,0,30.809-45.973,11.761-62.148C352.226,164.635,375.91,48,256,48c-119.911,0-96.226,116.635-95.433,133.662
 								 c-19.047,16.175-7.284,62.148,11.762,62.148c7.079,43.243,39.563,75.401,39.563,75.401s-0.252,30.398-11.307,32.157
 								 C164.976,357.034,32,415.685,32,480h224h224C480,415.685,347.024,357.034,311.412,351.368z"/>
 								</svg>
-							</div>
-							<input type="text" placeholder="Фамилия" name="family_name" ng-model="bg.reg_info.family_name" required>
-						</div>
-						<div id="login" class="login">
-							<div class="i-person">
-								<svg style="width: 22px !important;height: 22px !important;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        </div>
+                        <input type="text" placeholder="{{t('reg_surname_title')}}" name="family_name" ng-model="reg_info.family_name" required>
+                    </div>
+                    <div id="login" class="login" ng-class="classes('login')">
+                        <div class="i-person">
+                            <svg style="width: 22px !important;height: 22px !important;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 								  width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 								<path d="M311.412,351.368c-11.056-1.759-11.308-32.157-11.308-32.157s32.484-32.158,39.564-75.401
 								 c19.045,0,30.809-45.973,11.761-62.148C352.226,164.635,375.91,48,256,48c-119.911,0-96.226,116.635-95.433,133.662
 								 c-19.047,16.175-7.284,62.148,11.762,62.148c7.079,43.243,39.563,75.401,39.563,75.401s-0.252,30.398-11.307,32.157
 								 C164.976,357.034,32,415.685,32,480h224h224C480,415.685,347.024,357.034,311.412,351.368z"/>
 								</svg>
-							</div>
-							<input type="text" placeholder="Логин" name="login" ng-model="bg.reg_info.login" required>
-						</div>
-						<div id="mphone" class="login">
-							<div class="i-phone">
-								<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        </div>
+                        <input type="text" placeholder="{{t('reg_login_title')}}" name="login" ng-model="reg_info.login" required>
+                    </div>
+                    <div id="mphone" class="login" ng-class="classes('phone')">
+                        <div class="i-phone">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 									  width="15.54px" height="27.441px" viewBox="0 0 15.54 27.441" enable-background="new 0 0 15.54 27.441" xml:space="preserve">
 									<path d="M13.543,0H1.997C0.892,0,0,0.896,0,1.999v23.445c0,1.103,0.892,1.997,1.997,1.997h11.546c1.103,0,1.996-0.895,1.996-1.997
 									 V1.999C15.54,0.896,14.646,0,13.543,0z M4.921,1.214h5.701c0.144,0,0.26,0.215,0.26,0.48c0,0.267-0.116,0.482-0.26,0.482H4.921
@@ -62,24 +72,24 @@
 									 c0-0.703,0.572-1.273,1.275-1.273c0.701,0,1.272,0.57,1.272,1.273C9.043,24.897,8.472,25.469,7.771,25.469z M14.043,21.1H1.497
 									 V3.373h12.546V21.1z"/>
 								</svg>
-							</div>
-							<input type="tel" placeholder="Телефон"  name="phone" ng-model="bg.reg_info.phone" required>
-						</div>
-						<div id="mphone" class="login">
-							<div class="i-email">
-								<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        </div>
+                        <input type="tel" placeholder="{{t('reg_phone_title')}}" name="phone" ng-model="reg_info.phone" required phone>
+                    </div>
+                    <div id="email" class="login" ng-class="classes('email')">
+                        <div class="i-email">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 								  width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
 								<polygon points="52.303,56.764 18.936,27.462 85.669,27.462 "/>
 								<polygon points="39.011,50.415 15.627,70.95 15.627,29.88 "/>
 								<polygon points="42.042,53.077 52.303,62.087 62.562,53.077 85.689,73.387 18.915,73.387 "/>
 								<polygon points="65.593,50.416 88.979,29.88 88.979,70.95 "/>
 								</svg>
-							</div>
-							<input type="email" placeholder="Эл. почта" name="email" ng-model="bg.reg_info.email"required>
-						</div>
-						<div id="curr" class="login curr">
-							<div class="i-email">
-								<svg version="1.1" id="Isolation_Mode" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                        </div>
+                        <input type="email" placeholder="{{t('reg_email_title')}}" name="email" ng-model="reg_info.email" required>
+                    </div>
+                    <div id="curr" class="login curr" ng-class="classes('currency')">
+                        <div class="i-email">
+                            <svg version="1.1" id="Isolation_Mode" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 									 y="0px" width="30.353px" height="27.462px" viewBox="14.514 20.535 30.353 27.462"
 									 enable-background="new 14.514 20.535 30.353 27.462" xml:space="preserve">
 								<path d="M31.533,25.333l4.4,2.533C35.934,27.867,35.132,25.199,31.533,25.333z M31.23,30.312l-4.801-2.799
@@ -94,56 +104,48 @@
 									l0.901,0.268V34.4l-0.533,0.496l0.533,0.398v3.867c0,0-10.637,6.969-21.703,8.836l-8.618-5.146v-3.865l0.618-0.59l-0.563-0.61v-4
 									l0.695-0.188L14.6,32.934v-4c0,0,10.533-2,20.666-8.399L44.867,26V29.867z"/>
 								</svg>
-							</div>
-							<div class="select-currency">
-								<select>
-									<option value="0">Выберите тип валюты</option>
-									<option value="1">Евро</option>
-									<option value="2">Доллар</option>
-									<option value="3">Рубль</option>
-								</select>
-							</div>		
-						</div>
-						<p>*Все поля формы должны быть корректно заполнены. На следующих этапах мы отправим письмо и SMS для подтверждения того, что Вы владеете указанными контактными данными.</p>
-					</div>
-					</form>
-					<div class="col-2">
-						<p>Часть данных регистрационной формы будет заполнена из данных пользователя социальной сети. После нажатия на иконку соц. сети Вам потребуется авторизоваться. В дальнейшем вы сможете входить в личный кабинет через социальную сеть*.</p>
-						<div class="social-register">
-							<a class="vk" href="#"></a>
-							<a class="fb" href="#"></a>
-							<a class="google" href="#"></a>
-							<a class="odn" href="#"></a>
-							<a class="prima" href="#"></a>
-						</div>
-						<p>* Вход через социальную сеть Вы сможете разрешить/запретить в любой момент из личного кабинета PrimaTelecom.</p>
-					</div>
-				</div> 
-				<div class="lisence">
-					<p>
-						<input type="checkbox" id="agree" /><label for="agree"></label>	
-						Для регистрации Вам необходимо ознакомиться с <a href="registration-contract.html">договором</a> и принять его условия
-					</p>
-				</div>
-				<div class="submit-wrapp">
-				<div class="reg_button submit-button" ng-click="register()">Далее >></div>
-				</div>	
-		   	</div>
-		   <p class="footer-info">© ПримаТелеком, 2014</p>
-		</div>
-		
-		<div id="confirm_success">
-			<div class="inside_confirm">
-				<div class="logo">
-			    	<img src="img/logo_auth.png" alt="Прима телеком">
-				</div>
-				<h4>Это успех!</h4>
-				<p>Благодарим Вас за регистрацию на нашем сайте.</p>
-				<p>Теперь Вам доступен вход в личный кабинет.</p>
-				<p>Учетные данные направлены Вам электронным письмом.</p>
-				<p>Оставайтесь с нами!</p>
-				<a class="go-to-personal-cabinet" href="#">Перейти в личный кабинет</a>
-			</div>
-		</div>
-			
-	</div>
+                        </div>
+                        <div class="select-currency">
+                            <select ng-model="reg_info.currency" name="currency" required>
+                                <option value="">{{t('reg_currency_title')}}</option>
+                                <option value="EUR">{{t('reg_currency_euro_title')}}</option>
+                                <option value="USD">{{t('reg_currency_usd_title')}}</option>
+                                <option value="RUR">{{t('reg_currency_rub_title')}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p ng-bind-html="t('reg_info_star')"></p>
+                </div>
+            </form>
+            <div class="col-2">
+                <p ng-bind-html="t('reg_info_social_before')"></p>
+
+                <div class="social-register">
+                    <a class="vk" href="#"></a>
+                    <a class="fb" href="#"></a>
+                    <a class="google" href="#"></a>
+                    <a class="odn" href="#"></a>
+                    <a class="prima" href="#"></a>
+                </div>
+                <p ng-bind-html="t('reg_info_social_after')"></p>
+            </div>
+        </div>
+        <div class="lisence">
+            <p>
+                <input ng-model="agreed" type="checkbox" id="agree"/><label for="agree"></label>
+                <span ng-bind-html="t('reg_confirm')"></span>
+            </p>
+        </div>
+        <div class="submit-wrapp">
+            <div class="reg_button submit-button" ng-class="{validate: reg_form.$valid && agreed}" ng-click="register()">{{t('reg_next')}}</div>
+        </div>
+    </div>
+    <p class="footer-info">{{t('reg_copyright')}}</p>
+</div>
+
+<div id="confirm_success">
+    <div class="inside_confirm" ng-bind-html="t('reg_success_message')">
+    </div>
+</div>
+
+</div>
