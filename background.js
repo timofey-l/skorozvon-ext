@@ -149,6 +149,15 @@ Background = (function () {
     };
 
     /**
+     * Звонок через софтфон
+     * @param phone
+     */
+    Background.prototype.openSoftPhone = function(phone) {
+        chrome.tabs.create({
+            url:"tel:+"+phone.replace(/[^\d+]/gmi,'')
+        });
+    };
+    /**
      * Открывает окно с FlashPhoner и выполняет звонок на установленный номер
      *
      * @param phone - номер телефона
