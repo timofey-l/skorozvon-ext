@@ -121,11 +121,11 @@
                 <p ng-bind-html="t('reg_info_social_before')"></p>
 
                 <div class="social-register">
-                    <a class="vk" href="#"></a>
-                    <a class="fb" href="#"></a>
-                    <a class="google" href="#"></a>
-                    <a class="odn" href="#"></a>
-                    <a class="prima" href="#"></a>
+                    <a class="vk" href="" ng-show="reg_soc_type == '' || reg_soc_type == 'vk'" ng-click="registerSocial('vk')" ></a>
+                    <a class="fb" href="" ng-show="reg_soc_type == '' || reg_soc_type == 'facebook'"  ng-click="registerSocial('facebook')"></a>
+                    <a class="google" href="" ng-show="reg_soc_type == '' || reg_soc_type == 'google'"  ng-click="registerSocial('google')"></a>
+                    <a class="odn" href="" ng-show="reg_soc_type == '' || reg_soc_type == 'odnoklassniki'"  ng-click="registerSocial('odnoklassniki')"></a>
+                    <a class="prima" href="" ng-show="reg_soc_type == '' || reg_soc_type == 'prima'" ></a>
                 </div>
                 <p ng-bind-html="t('reg_info_social_after')"></p>
             </div>

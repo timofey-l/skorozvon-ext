@@ -57,7 +57,7 @@ LANGS = {
         reg_next: 'Далее >>',
         reg_success_message: '\
         <div class="logo"> \
-            <img src="img/logo_auth.png" alt="Прима телеком">\
+            <img src="/img/logo_auth.png" alt="Прима телеком">\
         </div> \
         <h4>Это успех!</h4> \
         <p>Благодарим Вас за регистрацию на нашем сайте.</p>\
@@ -66,7 +66,23 @@ LANGS = {
         <p>Оставайтесь с нами!</p>\
         <a class="go-to-personal-cabinet" href="#/settings">Перейти в личный кабинет</a>',
         reg_copyright: '© ПримаТелеком, 2014',
-        reg_not_valid_warn: 'Все поля должны быть заполнены!'
+        reg_not_valid_warn: 'Все поля должны быть заполнены!',
+        reg_confirm_email_text: '\
+        <h4>Подтверждение адреса электронной почты</h4>\
+        <p>Ваши регистрационные данные получены.</p>\
+        <p>В ближайшее время к Вам прийдет проверочное электронное письмо с кодом подтверждения для продолжения процедуры регистрации. </p>\
+        <p>Для проверки кода потребуется перейти по ссылке из письма или ввести код из письма в форму по ссылке.</p>',
+        reg_confirm_email_code: 'Код из письма',
+        reg_confirm_button: 'Подтвердить',
+        reg_confirm_sms_title: '\
+            <h4>Подтверждение номера телефона</h4>\
+            <p>На указанный Вами телефон было отправлено SMS-сообщение с кодом подтверждения.</p>\
+            <p>После проверки кода SMS будет произведена регистрация пользователя в системе PRIMATELECOM. <br/>Процесс регистрации займет несколько секунд, в это время браузер будет ожидать ответа от сервера.</p>\
+        ',
+        reg_confirm_sms_code: 'SMS код',
+        reg_confirm_email_error: 'При проверке почтового адреса возникла ошибка.\n Вернуться на страницу регистрации?',
+        reg_confirm_sms_error: 'При проверке номера телефона возникла ошибка.\n Вернуться на страницу регистрации?'
+
     },
     en: {
         title: 'Send SMS',
@@ -125,7 +141,7 @@ LANGS = {
         reg_next: 'Continue >>',
         reg_success_message: '\
         <div class="logo"> \
-            <img src="img/logo_auth.png" alt="Prima telecom">\
+            <img src="/img/logo_auth.png" alt="Prima telecom">\
         </div> \
         <h4>Success!</h4> \
         <p>Thank you for registration on our website.</p>\
@@ -134,7 +150,24 @@ LANGS = {
         <p>Keep staying with us!</p>\
         <a class="go-to-personal-cabinet" href="#/settings">Go to your personal account</a>',
         reg_copyright: '© PrimaTelecom, 2014',
-        reg_not_valid_warn: 'All fields must be correctly filled'
+        reg_not_valid_warn: 'All fields must be correctly filled',
+        reg_confirm_email_text: '\
+        <h4>Confirmation of email address</h4>\
+        <p>Your registration data was received.</p>\
+        <p>To continue the registration procedure, you will shortly receive a verification email with confirmation code. </p>\
+        <p>To check the code, please, follow the link in the received mail or type the code in the mail in the link form.</p>',
+        reg_confirm_email_code: 'Code in the mail',
+        reg_confirm_button: 'Confirm',
+        reg_confirm_sms_title: '<div class="logo">\
+            <img src="/img/logo_auth.png" alt="Prima telecom">\
+            </div>\
+            <h4>Confirmation of the phone number</h4>\
+            <p>SMS with confirmation code was sent to your mobile number.</p>\
+            <p>After SMS code verification user registration in PRIMATELECOM system will be made. <br/>The registration process takes a few seconds during which the browser waits for response from the server.</p>\
+        ',
+        reg_confirm_sms_code: 'Code in SMS',
+        reg_confirm_email_error: 'An error occurred while checking e-mail address. \n Go to the registration page?',
+        reg_confirm_sms_error: 'An error occurred while checking phone number. \n Go to the registration page?'
 
     }
 };

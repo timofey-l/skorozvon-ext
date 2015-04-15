@@ -2,13 +2,12 @@
 <style>.container{min-height: 610px;height: 100%;}</style>
 <div id="confirm_telephone">
 	<div class="inside_confirm">
-		<div class="logo">
-	    	<img src="img/logo_auth.png" alt="Прима телеком">
-		</div>
-		<h4>Подтверждение номера телефона</h4>
-		<p>На указанный Вами телефон было отправлено SMS-сообщение с кодом подтверждения.</p>
-		<p>После проверки кода SMS будет произведена регистрация пользователя в системе PRIMATELECOM. <br/>Процесс регистрации займет несколько секунд, в это время браузер будет ожидать ответа от сервера.</p>
-		<form action="#">
+        <div class="logo">
+            <img src="/img/logo_auth.png" alt="">
+        </div>
+        <div ng-bind-html="t('reg_confirm_sms_title')">
+
+        </div>
 			<div id="mphone" class="email-c">
 				<div class="i-phone">
 						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -20,9 +19,8 @@
 							 V3.373h12.546V21.1z"/>
 						</svg>
 					</div>
-				<input type="text" name="reg_cofirm_code" ng-model="reg_cofirm_code" placeholder="SMS код">
+				<input type="text" name="reg_cofirm_code" ng-model="reg_confirm_code_sms" placeholder="{{t('reg_confirm_sms_code')}}">
 			</div>
-				<input id="confirm_sms" type="button" ng-click="sendSMSConfirm()" class="reg_confirm_button" value="Подтвердить"> 
-		</form>
+				<input id="confirm_sms" type="button" ng-click="sendSMSConfirm()" class="reg_confirm_button" value="{{t('reg_confirm_button')}}">
 	</div>
 </div>

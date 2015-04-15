@@ -50,20 +50,6 @@ $(document).ready(function() {
 		
 	});
 	
-	$(document).on('click', '#confirm_registration #confirm', function(){
-		$('#confirm_registration').fadeOut();
-		$('#confirm_telephone').fadeIn();
-		$('#confirm_telephone').css('display','table');
-		setTimeout(function(){
-				$('#kod_sms').focus();
-			},300);	
-	});
-	
-	$(document).on('click', '#confirm_telephone #confirm_sms', function(){
-		$('#confirm_telephone').fadeOut();
-		$('#confirm_success').fadeIn();
-		$('#confirm_success').css('display','table');
-	});
 	
 	if ($('#authorization_window .col-2').is(':visible')){
 		$('.tabs .social').addClass('active-tab');

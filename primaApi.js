@@ -55,14 +55,124 @@ PrimaApi = (function () {
             currency: ''
         };
         _.extend(_data, data);
+        var self = this;
+        self._request_id = '';
+
         this.DoRequest({
             svc: 'regRequest',
             sign: true,
             data: _data,
-            onSuccess: function(res) {
+            onSuccess: function (res) {
+                self._request_id = res.data.request_id;
                 callback(res);
             }
         });
+    };
+
+    /**
+     * Подтверждение email адреса
+     * @param code
+     * @param callback
+     */
+    PrimaApi.prototype.confirmEmail = function (code, callback) {
+        var self = this;
+        var _data = {
+            request_id: self._request_id,
+            otp: code
+        };
+        self.DoRequest({
+            svc: 'regConfirmEmail',
+            sign: true,
+            data: _data,
+            onSuccess: function (r) {
+                if (callback) callback(r);
+            }
+        });
+    };
+
+    /**
+     * Подтверждение номера телефона
+     * @param code
+     * @param callback
+     */
+    PrimaApi.prototype.confirmSMS = function (code, callback) {
+        var self = this;
+        var _data = {
+            request_id: self._request_id,
+            otp: code
+        };
+        self.DoRequest({
+            svc: 'regConfirmSMS',
+            sign: true,
+            data: _data,
+            onSuccess: function (r) {
+                if (r.result == 1) {
+                    self.DoRequest({
+                        svc: 'regGetCredentials',
+                        sign: true,
+                        data: {
+                            request_id: self._request_id
+                        },
+                        onSuccess: function (res) {
+                            if (res.result == 1) {
+                                self._settings.sip_login = res.data.sip_login;
+                                self._settings.sip_password = res.data.sip_password;
+                                self.saveSettings();
+                                self.loginUser(callback);
+                            } else {
+                                if (callback) callback(res);
+                            }
+                        }
+                    });
+                } else {
+                    if (callback) callback(r);
+                }
+            }
+        });
+    };
+
+    /**
+     * Используется в регистрации через социальные сети
+     * @param type
+     * @param callback
+     */
+    PrimaApi.prototype.registerSocial = function (type, callback) {
+        var self = this;
+        this._soc_code = '';
+
+        this.getSocailAuthLink({
+            data: {
+                "type": type
+            },
+            onSuccess: function (r) {
+                if (r.result == 1) {
+                    self._soc_code = r.data.soc_code;
+                    chrome.windows.create({
+                        type: 'popup',
+                        url: r.data.url
+                    }, function (newWindow) {
+                        var win_id = newWindow.id;
+                        chrome.windows.onRemoved.addListener(function (winId) {
+                            if (win_id == winId) {
+                                self.DoRequest({
+                                    svc: 'socialAuthCheck',
+                                    sign: true,
+                                    data: {
+                                        soc_code: self._soc_code
+                                    },
+                                    onSuccess: function (res) {
+                                        // ответ с данными о пользователе
+                                        if (callback) callback(res);
+                                    }
+                                })
+                            }
+                        });
+                    });
+                } else {
+                    if (callback) callback(r);
+                }
+            }
+        })
     };
 
     /**

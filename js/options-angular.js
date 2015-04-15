@@ -5,9 +5,9 @@ var optionsApp = angular.module('optionsApp', ['ngRoute', 'ngSanitize']);
 optionsApp.directive('phone', function () {
     return {
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
+        link: function (scope, elm, attrs, ctrl) {
             if (ctrl) {
-                ctrl.$validators.phone = function(modelValue) {
+                ctrl.$validators.phone = function (modelValue) {
                     return ctrl.$isEmpty(modelValue) || isValidNumber(modelValue);
                 }
             }
@@ -375,7 +375,6 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
         });
     };
 
-
 });
 
 /**
@@ -413,25 +412,86 @@ optionsApp.controller('regCtrl', function ($scope, $route, $routeParams, $locati
     };
 
     $scope.agreed = false;
+    $scope.errors = '';
 
     $scope.register = function () {
-        if ($scope.reg_form.$valid && $scope.agreed) {
-            $scope.primaApi.register($scope.reg_info, function(res){
+        $scope.errors = '';
 
+        if ($scope.reg_form.$valid && $scope.agreed) {
+            $scope.primaApi.register($scope.reg_info, function (res) {
+                if (res.result == 1) {
+                    if (res.data.need_action == 'enter_new_email_otp') {
+                        window.location.hash = '#/register/confirm_email';
+                    }
+                    if (res.data.user_message) {
+                        alert(res.data.user_message);
+                    }
+                } else {
+                    $scope.errors = res.data;
+                }
             });
         } else {
             for (prop in $scope.reg_form) {
                 if (!/^\$/.test(prop))
                     $scope.reg_form[prop].$setTouched();
             }
-            setTimeout(function(){
+            setTimeout(function () {
                 $('form[name=reg_form] .invalid').addClass('attension');
-                setTimeout(function(){
+                setTimeout(function () {
                     $('form[name=reg_form] .invalid').removeClass('attension');
                 }, 300);
             }, 100);
 
         }
+    };
+
+    $scope.reg_confirm_code_email = '';
+    $scope.reg_confirm_code_sms = '';
+    $scope.sendEmailConfirm = function () {
+        $('#confirm_registration').fadeOut(300);
+        $scope.primaApi.confirmEmail($scope.reg_confirm_code_email, function (r) {
+            if (r.result == 1) {
+                if (r.data.need_action == 'enter_new_sms_otp') {
+                    window.location.hash = "#/register/confirm_sms";
+                }
+            } else {
+                $('#confirm_registration').fadeIn(300);
+                if (confirm(t('reg_confirm_email_error'))) {
+                    window.location.hash = "#/register";
+                }
+            }
+        });
+    };
+
+    $scope.sendSMSConfirm = function () {
+        $('#confirm_telephone').fadeOut(300);
+        $('body').css('cursor', 'wait');
+        $scope.primaApi.confirmSMS($scope.reg_confirm_code_sms, function (r) {
+            $('body').css('cursor', 'normal');
+            if (r === true) {
+                window.location.hash = "#/settings";
+            } else {
+                $('#confirm_telephone').fadeIn(300);
+                if (confirm(t('reg_confirm_sms_error'))) {
+                    window.location.hash = "#/register"
+                }
+            }
+        });
+    };
+
+    $scope.reg_soc_type = '';
+    $scope.registerSocial = function (type) {
+        $scope.primaApi.registerSocial(type, function (r) {
+            if (r.result == 1) {
+                $scope.reg_info.soc_code = $scope.primaApi._soc_code;
+                $scope.reg_info.name = r.data.soc_user_first_name;
+                $scope.reg_info.family_name = r.data.soc_user_last_name;
+                $scope.reg_soc_type = type;
+                $scope.$digest();
+            } else {
+                alert(r.data);
+            }
+        });
     }
 
 });
