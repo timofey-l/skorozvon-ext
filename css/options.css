@@ -291,14 +291,16 @@ select:focus{outline:none;}
 }
 #forget_window .col-1{
     text-align: center;
+    /* display: none; */
 }
 #forget_window .forget{
     width:360px;
     margin: 0 auto;
 }
 #forget_window .col-2{
-    display: none;
+    /*display: none;*/
     clear: both;
+    text-align: center;
 }
 #forget_window .col-2 img{
     margin: 70px auto 40px;

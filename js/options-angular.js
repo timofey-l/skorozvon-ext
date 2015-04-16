@@ -467,7 +467,7 @@ optionsApp.controller('regCtrl', function ($scope, $route, $routeParams, $locati
         $('#confirm_telephone').fadeOut(300);
         $('body').css('cursor', 'wait');
         $scope.primaApi.confirmSMS($scope.reg_confirm_code_sms, function (r) {
-            $('body').css('cursor', 'normal');
+            $('body').css('cursor', 'default');
             if (r === true) {
                 window.location.hash = "#/settings";
             } else {
@@ -496,6 +496,77 @@ optionsApp.controller('regCtrl', function ($scope, $route, $routeParams, $locati
 
 });
 
+optionsApp.controller('recoverCtrl', function ($scope) {
+    window.s = $scope;
+    $scope.t = window.t;
+
+    $scope.classes = function (field_name) {
+        if ($scope.reg_form[field_name])
+            return {
+                invalid: $scope.reg_form[field_name].$invalid && $scope.reg_form[field_name].$touched
+            };
+    };
+
+    $scope.settings = background._settings;
+    $scope.primaApi = background.primaApi;
+
+    $scope.changeLang = function () {
+        if ($scope.settings.lang == 'ru') {
+            $scope.settings.lang = 'en';
+        } else {
+            $scope.settings.lang = 'ru';
+        }
+    };
+
+    $scope.step = 1;
+
+    $scope.email = "";
+    $scope.code = "";
+
+    $scope.sendCodeToEmail = function () {
+        $scope.primaApi.sendRestoreEmail($scope.email, function (r) {
+            if (r.result == 1) {
+                $scope.step = 2;
+                $scope.$digest();
+            } else {
+                alert(r.data);
+            }
+        });
+    };
+
+    $scope.sendCode = function () {
+        $('#forget_window').fadeOut(300);
+        $('body').css({'cursor': 'wait'});
+        $scope.primaApi.sendRestoreCode($scope.code, function (r, error) {
+            $('body').css({'cursor': 'default'});
+            if (r.result == 1) {
+                $scope.primaApi._settings.sip_login = r.data.sip_login;
+                $scope.primaApi._settings.sip_password = r.data.sip_password;
+                $scope.primaApi.loginUser(function (res) {
+                    if (res === true) {
+                        $scope.primaApi.saveSettings();
+                        window.location.hash = "#/options";
+                    } else {
+                        $scope.step = 1;
+                        $scope.$digest();
+                        $('#forget_window').fadeIn(300);
+                        $('body').css({'cursor': 'default'});
+                        alert(error);
+                    }
+                });
+
+            } else {
+                $scope.step = 1;
+                $scope.$digest();
+                $('#forget_window').fadeIn(300);
+
+                alert(r.data);
+            }
+        });
+    }
+
+});
+
 /**
  * Router rules
  */
@@ -509,6 +580,10 @@ optionsApp.config(function ($routeProvider, $locationProvider) {
         .when('/settings', {
             controller: 'settingsCtrl',
             templateUrl: 'partial/settings.html'
+        })
+        .when('/recover', {
+            controller: 'recoverCtrl',
+            templateUrl: 'partial/recover_password.html'
         })
         .when('/register', {
             controller: 'regCtrl',

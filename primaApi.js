@@ -176,6 +176,47 @@ PrimaApi = (function () {
     };
 
     /**
+     * Запрос на отсылку письма с кодом для восстановления доступа
+     * @param email
+     * @param callback
+     */
+    PrimaApi.prototype.sendRestoreEmail = function (email, callback) {
+        var self = this;
+
+        return self.DoRequest({
+            svc: "restoreAuthSendEmail",
+            sign: true,
+            data: {
+                code: email
+            },
+            onSuccess: function (r) {
+                if (callback) callback(r);
+            }
+        });
+    };
+
+    /**
+     * Получение данных пользователя при восстановлении пароля
+     * @param code
+     * @param callback
+     */
+    PrimaApi.prototype.sendRestoreCode = function (code, callback) {
+        var self = this;
+
+        return this.DoRequest({
+            svc: "restoreAuth2",
+            data: {
+                otp: code
+            },
+            sign: true,
+            onSuccess: function (r) {
+                if (callback) callback(r);
+            }
+
+        });
+    };
+
+    /**
      * Попытка логина через социальную сеть
      * @param type
      * @param callback

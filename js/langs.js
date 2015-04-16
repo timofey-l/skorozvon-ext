@@ -81,7 +81,12 @@ LANGS = {
         ',
         reg_confirm_sms_code: 'SMS код',
         reg_confirm_email_error: 'При проверке почтового адреса возникла ошибка.\n Вернуться на страницу регистрации?',
-        reg_confirm_sms_error: 'При проверке номера телефона возникла ошибка.\n Вернуться на страницу регистрации?'
+        reg_confirm_sms_error: 'При проверке номера телефона возникла ошибка.\n Вернуться на страницу регистрации?',
+        recover_title: 'Восстановить пароль',
+        recover_enter_email: 'Введите ваш e-mail',
+        recover_send: 'Отправить',
+        recover_title_code: 'Код отправлен',
+        recover_enter_email_code: 'Введите код из письма',
 
     },
     en: {
@@ -167,7 +172,12 @@ LANGS = {
         ',
         reg_confirm_sms_code: 'Code in SMS',
         reg_confirm_email_error: 'An error occurred while checking e-mail address. \n Go to the registration page?',
-        reg_confirm_sms_error: 'An error occurred while checking phone number. \n Go to the registration page?'
+        reg_confirm_sms_error: 'An error occurred while checking phone number. \n Go to the registration page?',
+        recover_title: 'Password recovery',
+        recover_enter_email: 'Enter your email',
+        recover_send: 'Send',
+        recover_title_code: 'Code sent',
+        recover_enter_email_code: 'Code in the mail',
 
     }
 };
