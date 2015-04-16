@@ -183,6 +183,10 @@ LANGS = {
 };
 
 function t(id) {
+    if (typeof background == 'undefined') {
+        background = chrome.extension.getBackgroundPage().background;
+    }
+
     var l = background._settings.lang;
     if (LANGS[l].hasOwnProperty(id)) {
         return LANGS[l][id];

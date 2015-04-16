@@ -153,8 +153,9 @@ Background = (function () {
      * @param phone
      */
     Background.prototype.openSoftPhone = function(phone) {
+        phone = formatE164(this._settings.default_country, phone);
         chrome.tabs.create({
-            url:"tel:+"+phone.replace(/[^\d+]/gmi,'')
+            url:"tel:"+phone.replace(/[^\d+]/gmi,'')
         });
     };
     /**
@@ -168,6 +169,7 @@ Background = (function () {
         }
 
         var self = this;
+        phone = formatE164(this._settings.default_country, phone);
 
         chrome.windows.create({
             type: 'popup',
@@ -181,9 +183,11 @@ Background = (function () {
                 "document.getElementById('username').value = '" + self.primaApi._settings.sip_login + "';" +
                 "document.getElementById('password').value = '" + self.primaApi._settings.sip_password + "';" +
                 "document.getElementById('calleeText').value = '" + phone.replace(/[^\d]/gmi, '') + "';" +
+                "var e = new KeyboardEvent('keyup');" +
+                "document.getElementById('calleeText').dispatchEvent(e);" +
                 "document.title = 'ПРИМАТЕЛЕКОМ';" +
                 "})();",
-                runAt: "document_end",
+                runAt: "document_idle",
                 allFrames: true
             })
         })
