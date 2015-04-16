@@ -545,7 +545,7 @@ optionsApp.controller('recoverCtrl', function ($scope) {
                 $scope.primaApi.loginUser(function (res) {
                     if (res === true) {
                         $scope.primaApi.saveSettings();
-                        window.location.hash = "#/options";
+                        window.location.hash = "#/settings";
                     } else {
                         $scope.step = 1;
                         $scope.$digest();
