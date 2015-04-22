@@ -556,3 +556,18 @@ table{width: 100px !important;}
     font-size: 14px;
     color: #999;
 }
+
+.input-wrap input {
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 0 0 4px rgba(226,226,226,.3);
+    width: 250px;
+    height: 18px;
+    padding: 10px 14px;
+    font-size: 14px;
+}
+.amo-settings {
+    margin-bottom: 20px;
+}
+.amo-settings > :not(:last-child) {
+    margin-bottom: 20px;
+}

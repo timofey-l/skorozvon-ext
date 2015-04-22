@@ -35,7 +35,7 @@ Primatel.prototype.getPhones = function() {
  */
 Primatel.prototype.parsePage = function() {
     var a = i18n.phonenumbers.PhoneNumberUtil.getInstance();
-    var n = a.getExampleNumber(this._bg_settings.default_country);
+    var n = a.getExampleNumber(this._bg_settings.default_country || "RU");
 
     var country_code = n.values_[1];
     this.country_code_length = n.values_[1].toString().length;

@@ -11,7 +11,18 @@ Background = (function () {
             default_phone: '',
             popup_delay: 1000, // 1 сек
             default_country: 'RU',
-            lang: 'ru'
+            lang: 'ru',
+
+            // интеграция
+            amo_domain: '',
+            amo_email: '',
+            amo_hash: '',
+            amo_enabled: false,
+
+            // 2GIS
+            gis_code: '',
+            gis_enabled: false
+
         };
 
         // вкладки
@@ -48,6 +59,8 @@ Background = (function () {
         // инициализация primaApi
         this.primaApi = new PrimaApi();
 
+        // интеграция
+        this.integration = new Integration();
         chrome.browserAction.onClicked.addListener(function (tab) {
             chrome.tabs.create({url: chrome.extension.getURL('/options.html')});
             return false;

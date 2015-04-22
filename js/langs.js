@@ -87,7 +87,11 @@ LANGS = {
         recover_send: 'Отправить',
         recover_title_code: 'Код отправлен',
         recover_enter_email_code: 'Введите код из письма',
-
+        integration_settings_amo_domain: "Домен для подключения к API",
+        integration_settings_amo_email: "E-mail прользователя",
+        integration_settings_amo_hash: "HASH-код (из профиля)",
+        notify_place: "Город",
+        integration_settings_gis_api_key: "2GIS API ключ",
     },
     en: {
         title: 'Send SMS',
@@ -178,6 +182,8 @@ LANGS = {
         recover_send: 'Send',
         recover_title_code: 'Code sent',
         recover_enter_email_code: 'Code in the mail',
+        notify_place: "City",
+        integration_settings_gis_api_key: "2GIS API key",
 
     }
 };

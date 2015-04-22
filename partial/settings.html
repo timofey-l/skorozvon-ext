@@ -90,22 +90,57 @@
             <ul class="settings-block2">
                 <li>
                     <div class="integration">{{t('crm_integration')}}</div>
+                    <!--amoCRM-->
                     <div class="crm">
-                        <a class="crm-logo" href="#"><img src="/img/gis.png" alt="2gis"/></a>
-                        <a class="crm-link" href="#">2gis.ua</a>
-
-                        <div class="switch" ng-class="{on:bg.settings.recordCalls,off:!bg.settings.recordCalls}">
-                            <div style="opacity:0" class="loading">
-                                <ul class="loader">
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                </ul>
+                        <a class="crm-logo" href="#"><img src="/img/amo.png" alt="amo"/></a>
+                        <a class="crm-link" target="_blank" href="http://www.amocrm.ru/">amocrm.ru</a>
+                        <div class="switch" ng-class="{on: settings.amo_enabled, off:!settings.amo_enabled}" ng-click="settings.amo_enabled = !settings.amo_enabled">
+                        </div>
+                    </div>
+                    <div class="amo-settings" ng-show="settings.amo_enabled">
+                        <div class="amo_domain">
+                            <div class="input-label ">
+                                {{t('integration_settings_amo_domain')}}:
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" ng-model="settings.amo_domain"/>
+                            </div>
+                        </div>
+                        <div class="amo_email">
+                            <div class="input-label ">
+                                {{t('integration_settings_amo_email')}}:
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" ng-model="settings.amo_email"/>
+                            </div>
+                        </div>
+                        <div class="amo_hash">
+                            <div class="input-label ">
+                                {{t('integration_settings_amo_hash')}}:
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" ng-model="settings.amo_hash"/>
                             </div>
                         </div>
                     </div>
-
+                    <!--2gis-->
+                    <div class="crm" style="  border-top: 1px solid #cecece;
+  padding-top: 20px;">
+                        <a class="crm-logo" href="#"><img src="/img/gis.png" alt="gis"/></a>
+                        <a class="crm-link" target="_blank" href="http://api.2gis.ru/">api.2gis.ru</a>
+                        <div class="switch" ng-class="{on: settings.gis_enabled, off:!settings.gis_enabled}" ng-click="settings.gis_enabled = !settings.gis_enabled">
+                        </div>
+                    </div>
+                    <div class="gis-settings" ng-show="settings.gis_enabled">
+                        <div class="gis_key">
+                            <div class="input-label ">
+                                {{t('integration_settings_gis_api_key')}}:
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" ng-model="settings.gis_code"/>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li>
                     <div class="crm">
@@ -132,10 +167,10 @@
                              ng-click="primaApi._settings.exec_command = !primaApi._settings.exec_command">
                         </div>
                     </div>
-                    <div ng-show="primaApi._settings.recieve_incoming_messages">
+                    <div ng-show="primaApi._settings.exec_command">
 
-                        <input class="complete-command" type="text" placeholder="{{t('enter_command')}}"/>
-                        <a class="add-button" href="#">{{t('add_command')}}</a>
+                        <input class="complete-command" ng-repeat="c in primaApi._settings.commands" ng-model="c.command" type="text" placeholder="{{t('enter_command')}}"/>
+                        <a class="add-button" href="" ng-click="primaApi._settings.commands.push({command:''})">{{t('add_command')}}</a>
                     </div>
                 </li>
             </ul>
