@@ -355,7 +355,12 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
     };
 
     $scope.login = function () {
+        $('#my-content').fadeOut(300);
+        $('body').css({cursor:'wait'});
         $scope.primaApi.loginUser(function (success, error) {
+            $('#my-content').fadeIn(300);
+            $('body').css({cursor:'default'});
+
             if (success) {
                 $scope.primaApi.saveSettings();
                 window.location.hash = '#/';
@@ -366,7 +371,11 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
     };
 
     $scope.loginSocial = function (type) {
+        $('#my-content').fadeOut(300);
+        $('body').css({cursor:'wait'});
         $scope.primaApi.loginSocial(type, function (result) {
+            $('#my-content').fadeIn(300);
+            $('body').css({cursor:'default'});
             if (result) {
                 window.location.hash = '#/settings';
             } else {
