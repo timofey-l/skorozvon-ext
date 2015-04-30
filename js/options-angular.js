@@ -1,5 +1,5 @@
 var background = chrome.extension.getBackgroundPage().background;
-
+background.primaApi.getFullUserInfo();
 var optionsApp = angular.module('optionsApp', ['ngRoute', 'ngSanitize']);
 
 optionsApp.directive('phone', function () {
@@ -576,9 +576,14 @@ optionsApp.controller('recoverCtrl', function ($scope) {
     $scope.step = 1;
 
     $scope.email = "";
-    $scope.code = "";
+    $scope.email_code = "";
 
     $scope.sendCodeToEmail = function () {
+        $scope.restore_form.email.$setTouched();
+        if ($scope.email.trim() == '') {
+            $('[name=email]').focus();
+            return;
+        }
         $scope.primaApi.sendRestoreEmail($scope.email, function (r) {
             if (r.result == 1) {
                 $scope.step = 2;
@@ -590,9 +595,15 @@ optionsApp.controller('recoverCtrl', function ($scope) {
     };
 
     $scope.sendCode = function () {
+        $scope.restore_form.code.$setTouched();
+        if (typeof $scope.email_code == 'undefined' || $scope.email_code.trim() == '') {
+            $('[name=code]').focus();
+            return;
+        }
+
         $('#forget_window').fadeOut(300);
         $('body').css({'cursor': 'wait'});
-        $scope.primaApi.sendRestoreCode($scope.code, function (r, error) {
+        $scope.primaApi.sendRestoreCode($scope.email_code, function (r, error) {
             $('body').css({'cursor': 'default'});
             if (r.result == 1) {
                 $scope.primaApi._settings.sip_login = r.data.sip_login;

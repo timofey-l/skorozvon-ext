@@ -25,11 +25,11 @@
             </div>
             <div>
                 <span class="label">{{t('settings_balance')}}: </span><span class="value">{{primaApi.user.balance}}</span>
-                <a class="label top_up" href="http://office.primatel.ru/payments/new">{{t('settings_add_funds')}}</a>
+                <a class="label top_up" href="{{primaApi.user.urls.url}}">{{t('settings_add_funds')}}</a>
             </div>
             <div>
                 <span class="label">{{t('settings_online_shop')}}</span><a class="enter-button"
-                                                                           ng-click="enterCatalog()">{{t('enter')}}</a>
+                                                                           href="{{primaApi.user.urls.url}}">{{t('enter')}}</a>
             </div>
         </div>
         <div class="selection">

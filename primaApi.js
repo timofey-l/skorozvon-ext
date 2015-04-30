@@ -150,6 +150,10 @@ PrimaApi = (function () {
                 if (r.result == 1) {
                     self._soc_code = r.data.soc_code;
                     chrome.windows.create({
+                        width: 800,
+                        height: 600,
+                        top: 0,
+                        left: 0,
                         type: 'popup',
                         url: r.data.url
                     }, function (newWindow) {
@@ -235,6 +239,10 @@ PrimaApi = (function () {
                 if (result.result == 1) {
                     self._soc_code = result.data.soc_code;
                     chrome.windows.create({
+                        width: 800,
+                        height: 600,
+                        top: 0,
+                        left: 0,
                         type: 'popup',
                         url: result.data.url
                     }, function (newWindow) {
@@ -857,6 +865,23 @@ PrimaApi = (function () {
                         }
                     }
                 });
+            })
+            .then(function () {
+                self.DoRequest({
+                    svc: 'getCabinetLink2',
+                    sign: true,
+                    data: {
+                        sip_login: self._settings.sip_login,
+                        sip_password: self._settings.sip_password
+                    },
+                    onSuccess: function (resp) {
+                        if (resp.result == 1) {
+                            res.urls = {};
+                            _.extend(res.urls, resp.data);
+                        }
+                    }
+                });
+
             })
             .then(function () {
                 _.extend(res, {pending: false});

@@ -608,3 +608,17 @@ select:focus{outline:none;}
     width: 330px !important;
     margin: 0 auto;
 }
+
+.invalid {
+    transition: all 100ms;
+    transform: scale(1);
+}
+
+.invalid.attension {
+    transform: scale(1.1) !important;
+}
+
+.invalid input, .invalid .select-currency {
+    box-shadow: 0 0 0 4px rgba(255, 214, 214, .4) !important;
+    border-color: #ecc !important;
+}
