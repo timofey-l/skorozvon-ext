@@ -356,10 +356,10 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
 
     $scope.login = function () {
         $('#my-content').fadeOut(300);
-        $('body').css({cursor:'wait'});
+        $('body').css({cursor: 'wait'});
         $scope.primaApi.loginUser(function (success, error) {
             $('#my-content').fadeIn(300);
-            $('body').css({cursor:'default'});
+            $('body').css({cursor: 'default'});
 
             if (success) {
                 $scope.primaApi.saveSettings();
@@ -372,10 +372,10 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
 
     $scope.loginSocial = function (type) {
         $('#my-content').fadeOut(300);
-        $('body').css({cursor:'wait'});
+        $('body').css({cursor: 'wait'});
         $scope.primaApi.loginSocial(type, function (result) {
             $('#my-content').fadeIn(300);
-            $('body').css({cursor:'default'});
+            $('body').css({cursor: 'default'});
             if (result) {
                 window.location.hash = '#/settings';
             } else {
@@ -383,6 +383,52 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
             }
         });
     };
+
+    $scope.lk_login = '';
+    $scope.lk_password = '';
+    $scope.prima_sips = [];
+    $scope.showLoginPrimatel = function () {
+        $('#my-content').fadeOut(300);
+        $('.prima-login-dialog').fadeIn(300);
+    };
+
+    $scope.prima_login = function () {
+        $scope.primaApi.getUserSIP({
+            login: $scope.lk_login,
+            password: $scope.lk_password
+        }, function (res) {
+            if (res !== false) {
+                $scope.prima_sips = res;
+                $('.prima-login-dialog .login-form').fadeOut(300);
+                $('.prima-login-dialog .sip-list').fadeIn(300);
+                $scope.$digest();
+            } else {
+                alert(t('error_prima_login'));
+                $('#my-content').fadeIn(300);
+                $('.prima-login-dialog').fadeOut(300);
+            }
+        });
+    };
+
+    $scope.loginPrima = function (sip) {
+        $('.prima-login-dialog').fadeOut(300);
+        $('body').css({cursor: 'wait'});
+        $scope.primaApi.loginPrimaUser({
+            login: $scope.lk_login,
+            password: $scope.lk_password,
+            sip_login: sip.sip
+        }, function (r) {
+            $('body').css({cursor: 'default'});
+            if (r === true) {
+                setTimeout(function () {
+                    window.location.hash = "#/settings";
+                }, 2000);
+            } else {
+                $('.prima-login-dialog').fadeIn(300);
+                alert(t('error_prima_login'));
+            }
+        });
+    }
 
 });
 

@@ -92,6 +92,10 @@ LANGS = {
         integration_settings_amo_hash: "HASH-код (из профиля)",
         notify_place: "Город",
         integration_settings_gis_api_key: "2GIS API ключ",
+        primatel_login: "Введите логин и пароль <br/> от личного кабинета <br/> в системе \"Прима Телеком\"",
+        login_prima_login: "Введите логин",
+        login_prima_password: "Введите пароль",
+        error_prima_login: "Ошибка при входе через личный кабинет Прима Телеком",
     },
     en: {
         title: 'Send SMS',
@@ -184,7 +188,10 @@ LANGS = {
         recover_enter_email_code: 'Code in the mail',
         notify_place: "City",
         integration_settings_gis_api_key: "2GIS API key",
-
+        primatel_login: "Enter login and password <br/> from your Prima Telecom system account",
+        login_prima_login: "Enter login",
+        login_prima_password: "Enter password",
+        error_prima_login: "error occured while signing in with Prima Telecom account",
     }
 };
 

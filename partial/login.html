@@ -32,16 +32,47 @@
         </form>
         <div class="col-2">
             <p>{{t('login_social_text')}}</p>
-            <a class="vk" href="" ng-click="loginSocial('vk')" ></a>
+            <a class="vk" href="" ng-click="loginSocial('vk')"></a>
             <a class="fb" href="" ng-click="loginSocial('facebook')"></a>
             <a class="google" href="" ng-click="loginSocial('google')"></a>
             <a class="odn" href="" ng-click="loginSocial('odnoklassniki')"></a>
-            <a class="prima" href=""></a>
+            <a class="prima" href="" ng-click="showLoginPrimatel()"></a>
         </div>
         <div class="sign_up"><a href="#/register">{{t('login_register')}}</a></div>
-
-
     </div>
+
 </div>
 <p class="footer-info">{{t('reg_copyright')}}</p>
+</div>
+
+<div class="prima-login-dialog" style="display:none;">
+    <div>
+        <div class="logo">
+            <img src="img/logo_auth.png" alt="">
+        </div>
+
+        <div class="col-1 login-form">
+            <p ng-bind-html="t('primatel_login')"></p>
+
+            <div id="" class="login">
+                <input type="text" name="login" ng-model="lk_login" placeholder="{{t('login_prima_login')}}"
+                       autofocus="" class="ng-pristine ng-valid ng-touched">
+            </div>
+            <div class="pass">
+                <input type="password" name="password" ng-model="lk_password"
+                       placeholder="{{t('login_prima_password')}}" class="ng-pristine ng-untouched ng-valid">
+            </div>
+            <a href="" class="login-next-button submit-button ng-binding" ng-click="prima_login()">Войти</a>
+        </div>
+        <div class="col-1 sip-list" style="display:none;">
+            <div class="sip_button" ng-repeat="s in prima_sips">
+                <a href="" class="login-next-button submit-button ng-binding" ng-click="loginPrima(s)">
+                    {{s.name}}
+                    <br/>
+                    <small>{{s.sip}}</small>
+                </a>
+            </div>
+        </div>
+
+    </div>
 </div>

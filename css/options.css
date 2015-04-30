@@ -541,3 +541,70 @@ select:focus{outline:none;}
         margin-bottom: 10px;
     }
 }
+
+.prima-login-dialog {
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.prima-login-dialog > div {
+    width: 400px;
+    height: 500px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+}
+
+.prima-login-dialog > div > * {
+    text-align: center;
+}
+
+.prima-login-dialog .logo {
+    padding-top: 20px;
+}
+
+.prima-login-dialog input[type='text'], .prima-login-dialog input[type='password'] {
+    border: 1px solid #d9d9d9;
+    padding-left: 80px;
+    height: 44px;
+    margin: 20px 0 10px;
+    box-shadow: 0 0 0 4px rgba(226, 226, 226, .3);
+    width: 250px;
+    height: 18px;
+    padding: 14px 14px 14px 65px;
+}
+
+.prima-login-dialog .submit-button {
+    border: none;
+    font-size: 20px;
+    color: #fff;
+    background: none;
+    cursor: pointer;
+    padding: 12px 48px;
+    display: inline-block;
+    margin: 25px 0 0 0;
+    letter-spacing: 1px;
+    outline: none;
+    position: relative;
+    background: #418bca;
+    box-shadow: 0 2px #3776ad;
+    border-radius: 10px;
+    box-sizing: border-box;
+    clear: both;
+    text-decoration: none;
+    outline: none;
+}
+
+.prima-login-dialog .login, .prima-login-dialog .pass {
+    width: 330px !important;
+    margin: 0 auto;
+}
