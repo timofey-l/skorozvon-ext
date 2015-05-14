@@ -265,27 +265,20 @@ PrimaApi = (function () {
                                                         soc_code: self._soc_code
                                                     },
                                                     onSuccess: function (res) {
-                                                        if (res.result == 1 && res.data.sip1) {
-                                                            self._settings.sip_login = res.data.sip1;
-                                                            self.DoRequest({
-                                                                svc: 'getSipPassword2',
-                                                                sign: true,
-                                                                data: {
-                                                                    soc_code: self._soc_code,
-                                                                    sip_login: res.data.sip1
-                                                                },
-                                                                onSuccess: function (r) {
-                                                                    if (r.result === 1 && (r.data.password)) {
-                                                                        self._settings.sip_password = r.data.password;
-                                                                        self.saveSettings();
-                                                                        self.loginUser(function (success) {
-                                                                            if (callback) callback(success);
-                                                                        });
-                                                                    } else {
-                                                                        if (callback) callback(false);
-                                                                    }
+                                                        if (res.result == 1) {
+
+                                                            var sip_arr = [];
+                                                            for (var f in res.data) {
+                                                                if (f.indexOf('sip') == 0) {
+                                                                    var id = parseInt(f.slice(3));
+                                                                    sip_arr.push({
+                                                                        sip: res.data['sip' + id],
+                                                                        name: res.data['name' + id]
+                                                                    });
                                                                 }
-                                                            });
+                                                            }
+                                                            if (callback) callback(sip_arr);    
+
                                                         } else {
                                                             if (callback) callback(false);
                                                         }
@@ -306,6 +299,40 @@ PrimaApi = (function () {
                     self._login_error = result.data;
                     if (callback) callback(false);
                 }
+            }
+        });
+    };
+
+    /**
+     * Вход по sip номеру через соц. сеть
+     */
+    PrimaApi.prototype.loginSocialSip = function(sip, callback) {
+        var self = this;
+        var data = {
+            soc_code: self._soc_code,
+            sip_login: sip
+        };
+
+        this.DoRequest({
+            svc: 'getSipPassword2',
+            sign: true,
+            data: data,
+            onSuccess: function (data) {
+                if (data.result == 1) {
+                    self._settings.sip_login = sip;
+                    self._settings.sip_password = data.data.password;
+                    callback(true);
+                    self.loginUser(function (r) {
+                        if (r === true) {
+                            window.location.hash = "#/settings";
+                        } else {
+                            if (callback) callback(false);
+                        }
+                    });
+                } else {
+                    if (callback) callback(false);
+                }
+
             }
         });
     };

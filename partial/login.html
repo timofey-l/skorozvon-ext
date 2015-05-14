@@ -62,7 +62,7 @@
                 <input type="password" name="password" ng-model="lk_password"
                        placeholder="{{t('login_prima_password')}}" class="ng-pristine ng-untouched ng-valid">
             </div>
-            <a href="" class="login-next-button submit-button ng-binding" ng-click="prima_login()">Войти</a>
+            <a href="" class="login-next-button submit-button ng-binding" ng-click="prima_login()">{{t('login_button_title')}}</a>
         </div>
         <div class="col-1 sip-list" style="display:none;">
             <div class="sip_button" ng-repeat="s in prima_sips">
@@ -72,6 +72,44 @@
                     <small>{{s.sip}}</small>
                 </a>
             </div>
+            <div class="sip_button" ng-repeat="s in prima_sips">
+                <a href="" class="login-next-button submit-button ng-binding" ng-click="loginPrima(s)">
+                    {{s.name}}
+                    <br/>
+                    <small>{{s.sip}}</small>
+                </a>
+            </div>
+
+            <div class="sip_button" ng-repeat="s in prima_sips">
+                <a href="" class="login-next-button submit-button ng-binding" ng-click="loginPrima(s)">
+                    {{s.name}}
+                    <br/>
+                    <small>{{s.sip}}</small>
+                </a>
+            </div>
+
+            <div class="sip_button" ng-repeat="s in prima_sips">
+                <a href="" class="login-next-button submit-button ng-binding" ng-click="loginPrima(s)">
+                    {{s.name}}
+                    <br/>
+                    <small>{{s.sip}}</small>
+                </a>
+            </div>
+            <div class="sip_button" ng-repeat="s in prima_sips">
+                <a href="" class="login-next-button submit-button ng-binding" ng-click="loginPrima(s)">
+                    {{s.name}}
+                    <br/>
+                    <small>{{s.sip}}</small>
+                </a>
+            </div>
+            <div class="sip_button" ng-repeat="s in prima_sips">
+                <a href="" class="login-next-button submit-button ng-binding" ng-click="loginPrima(s)">
+                    {{s.name}}
+                    <br/>
+                    <small>{{s.sip}}</small>
+                </a>
+            </div>
+
         </div>
 
     </div>

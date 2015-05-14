@@ -370,16 +370,24 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
         });
     };
 
+    // Вход через социальные сети
+    // получение списка сип номеров для последующего вывода
     $scope.loginSocial = function (type) {
         $('#my-content').fadeOut(300);
         $('body').css({cursor: 'wait'});
-        $scope.primaApi.loginSocial(type, function (result) {
-            $('#my-content').fadeIn(300);
+        $scope.primaApi.loginSocial(type, function (sips) {
+            // $('#my-content').fadeIn(300);
             $('body').css({cursor: 'default'});
-            if (result) {
-                window.location.hash = '#/settings';
+            if (sips) {
+                $scope.prima_sips = sips;
+                $('.prima-login-dialog .login-form').hide();
+                $('.prima-login-dialog .sip-list').show();
+                $('.prima-login-dialog').fadeIn(300);
+                $scope.$digest();
+                // window.location.hash = '#/settings';
             } else {
                 alert(t('login_social_error'));
+                $('#my-content').fadeIn(300);
             }
         });
     };
@@ -413,21 +421,37 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
     $scope.loginPrima = function (sip) {
         $('.prima-login-dialog').fadeOut(300);
         $('body').css({cursor: 'wait'});
-        $scope.primaApi.loginPrimaUser({
-            login: $scope.lk_login,
-            password: $scope.lk_password,
-            sip_login: sip.sip
-        }, function (r) {
-            $('body').css({cursor: 'default'});
-            if (r === true) {
-                setTimeout(function () {
-                    window.location.hash = "#/settings";
-                }, 2000);
-            } else {
-                $('.prima-login-dialog').fadeIn(300);
-                alert(t('error_prima_login'));
-            }
-        });
+
+        if (!$scope.lk_login) {
+            $scope.primaApi.loginSocialSip(sip.sip, function (r) {
+                $('body').css({cursor: 'default'});
+                if (r === true) {
+                    setTimeout(function () {
+                        window.location.hash = "#/settings";
+                    }, 2000);
+                } else {
+                    $('.prima-login-dialog').fadeIn(300);
+                    alert(t('login_social_error'));
+                }
+            });
+
+        } else {
+            $scope.primaApi.loginPrimaUser({
+                login: $scope.lk_login,
+                password: $scope.lk_password,
+                sip_login: sip.sip
+            }, function (r) {
+                $('body').css({cursor: 'default'});
+                if (r === true) {
+                    setTimeout(function () {
+                        window.location.hash = "#/settings";
+                    }, 2000);
+                } else {
+                    $('.prima-login-dialog').fadeIn(300);
+                    alert(t('error_prima_login'));
+                }
+            });
+        }
     }
 
 });
