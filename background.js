@@ -12,6 +12,7 @@ Background = (function () {
             popup_delay: 1000, // 1 сек
             default_country: 'RU',
             lang: 'ru',
+            sp_type: 'sip',
 
             // интеграция
             amo_domain: '',
@@ -168,7 +169,7 @@ Background = (function () {
     Background.prototype.openSoftPhone = function(phone) {
         phone = formatE164(this._settings.default_country, phone);
         chrome.tabs.create({
-            url:"tel:"+phone.replace(/[^\d+]/gmi,'')
+            url:this._settings.sp_type + ":" +phone.replace(/[^\d+]/gmi,'')
         });
     };
     /**

@@ -620,3 +620,11 @@ table{width: 100px !important;}
 .account_link:hover {
     text-decoration: none;
 }
+
+.soft_phone_options {
+    margin: 15px 0;
+}
+
+.soft_phone_options .radio {
+
+}

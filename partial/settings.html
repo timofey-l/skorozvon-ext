@@ -52,6 +52,14 @@
                 <input type="tel" ng-model="settings.default_phone" id="defaultPhone" name="defaultPhone"
                        placeholder="{{t('enter_phone_number')}}"/>
             </div>
+            <div class="soft_phone_options selection" ng-show="settings.call_type == 2">
+                <div class="radio" ng-class="{checked: settings.sp_type == 'sip'}" ng-click="settings.sp_type = 'sip'">
+                    sip:
+                </div>
+                <div class="radio" ng-class="{checked: settings.sp_type == 'tel'}" ng-click="settings.sp_type = 'tel'">
+                    tel:
+                </div>
+            </div>
         </div>
         <div class="group-block">
             <div class="record">
