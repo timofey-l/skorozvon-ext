@@ -185,6 +185,7 @@ h1 img{vertical-align: top;}
 }
 .callback-phone{
     display: inline-block;
+    margin-top: 3px;
 }
 .callback-phone input{
     border: 1px solid #d9d9d9;
@@ -561,7 +562,7 @@ table{width: 100px !important;}
     border: 1px solid #d9d9d9;
     box-shadow: 0 0 0 4px rgba(226,226,226,.3);
     width: 250px;
-    height: 18px;
+    height: 18px; 
     padding: 10px 14px;
     font-size: 14px;
 }
@@ -570,4 +571,41 @@ table{width: 100px !important;}
 }
 .amo-settings > :not(:last-child) {
     margin-bottom: 20px;
+}
+
+.reloadBalance {
+    cursor: pointer; 
+    width: 24px; 
+    height: 24px; 
+    display: block; 
+    position: absolute; 
+    right: -30px; 
+    top: 0;
+    background-image: url(/img/uppd-refresh.png);
+    background-size: cover;
+}
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
 }

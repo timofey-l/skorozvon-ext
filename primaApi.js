@@ -894,6 +894,7 @@ PrimaApi = (function () {
                 });
             })
             .then(function () {
+                return false;
                 self.DoRequest({
                     svc: 'getCabinetLink2',
                     sign: true,
@@ -921,6 +922,26 @@ PrimaApi = (function () {
 
         return res;
     };
+
+    /**
+     * Обновление баланса пользователя
+     */
+    PrimaApi.prototype.updateBallance = function(callback) {
+        var self = this;
+        self.DoRequest({
+            svc: 'getBalance2',
+            data: {
+                sip_login: self._settings.sip_login,
+                sip_password: self._settings.sip_password
+            },
+            onSuccess: function (response) {
+                if (response.result == 1) {
+                    self.user.balance = response.data.balance;
+                }
+                if (callback) callback();
+            }
+        });
+    }
 
     /**
      * Отправляет запрос на отправку СМС

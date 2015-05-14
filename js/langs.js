@@ -53,7 +53,7 @@ LANGS = {
         reg_info_star: "*Все поля формы должны быть корректно заполнены. На следующих этапах мы отправим письмо и SMS для подтверждения того, что Вы владеете указанными контактными данными.",
         reg_info_social_before: "Часть данных регистрационной формы будет заполнена из данных пользователя социальной сети. После нажатия на иконку соц. сети Вам потребуется авторизоваться. В дальнейшем вы сможете входить в личный кабинет через социальную сеть*.",
         reg_info_social_after: "* Вход через социальную сеть Вы сможете разрешить/запретить в любой момент из личного кабинета PrimaTelecom.",
-        reg_confirm: "Для регистрации Вам необходимо ознакомиться с <a href=\"registration-contract.html\">договором</a> и принять его условия",
+        reg_confirm: "Для регистрации Вам необходимо ознакомиться с <a target=\"blank\" href=\"http://office.primatel.ru/index/contract?lang=ru\">договором</a> и принять его условия",
         reg_next: 'Далее >>',
         reg_success_message: '\
         <div class="logo"> \
@@ -150,7 +150,7 @@ LANGS = {
         reg_info_star: "*All fields should be correctly filled out. After that we'll send you an email and SMS to confirm that you know the above contact details.",
         reg_info_social_before: "Part of the registration form data will be filled out with use of the social network user information. After clicking on the soc.icon, you will need to get authorized in social network. In the future you will be able to enter your personal account through a social network*.",
         reg_info_social_after: "* You can enable/disable authorization via social network at any moment in your PrimaTelecom personal account.",
-        reg_confirm: "To finish registration, you need to reed <a href=\"registration-contract.html\">the agreement</a> and accept its conditions.",
+        reg_confirm: "To finish registration, you need to reed <a target=\"blank\" href=\"http://office.primatel.ru/index/contract?lang=en\">the agreement</a> and accept its conditions.",
         reg_next: 'Continue >>',
         reg_success_message: '\
         <div class="logo"> \

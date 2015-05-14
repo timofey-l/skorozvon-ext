@@ -9,7 +9,7 @@
               ng-click="changeLang()">
             <img class="eng" src="img/angl.png" alt=""/>
             <img class="rus" src="img/rus.png" alt=""/>
-        </span>
+        </span> 
 
         <h1><img src="img/small-logo.png" alt=""> {{t('settings_title')}}</h1>
 
@@ -24,12 +24,14 @@
                 <a class="showAuth" href="#/login">{{t('settings_enter_other_credentails')}}</a>
             </div>
             <div>
-                <span class="label">{{t('settings_balance')}}: </span><span class="value">{{primaApi.user.balance}}</span>
+                <span class="label">{{t('settings_balance')}}: </span><span class="value" style="position:relative;">{{primaApi.user.balance}}
+
+                <div class="reloadBalance " ng-click="updateBallance()" ></div>
+                </span>
                 <a class="label top_up" href="{{primaApi.user.urls.url}}">{{t('settings_add_funds')}}</a>
             </div>
             <div>
-                <span class="label">{{t('settings_online_shop')}}</span><a class="enter-button"
-                                                                           href="{{primaApi.user.urls.url}}">{{t('enter')}}</a>
+                <span class="label">{{t('settings_online_shop')}}</span><a class="enter-button" target="blank" href="http://shop.primatel.ru/">{{t('enter')}}</a>
             </div>
         </div>
         <div class="selection">
