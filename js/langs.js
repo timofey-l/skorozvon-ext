@@ -96,6 +96,7 @@ LANGS = {
         login_prima_login: "Введите логин",
         login_prima_password: "Введите пароль",
         error_prima_login: "Ошибка при входе через личный кабинет Прима Телеком",
+        settings_account_link: 'Личный кабинет',
     },
     en: {
         title: 'Send SMS',
@@ -192,6 +193,7 @@ LANGS = {
         login_prima_login: "Enter login",
         login_prima_password: "Enter password",
         error_prima_login: "error occured while signing in with Prima Telecom account",
+        settings_account_link: 'Account',
     }
 };
 

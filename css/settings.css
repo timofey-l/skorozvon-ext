@@ -609,3 +609,14 @@ table{width: 100px !important;}
     transform: rotate(0deg);
   }
 }
+
+.account_link {
+    font-size: 12px;
+    color: #336c9e;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.account_link:hover {
+    text-decoration: none;
+}

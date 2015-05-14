@@ -924,6 +924,28 @@ PrimaApi = (function () {
     };
 
     /**
+     * Переход в личный кабинет
+     */
+    PrimaApi.prototype.goToCabinet = function() {
+        var self = this;
+        self.DoRequest({
+            svc: 'getCabinetLink2',
+            sign: true,
+            data: {
+                sip_login: self._settings.sip_login,
+                sip_password: self._settings.sip_password
+            },
+            onSuccess: function (resp) {
+                if (resp.result == 1) {
+                    chrome.tabs.create({
+                        url: resp.data.url
+                    });
+                }
+            }
+        });
+    };
+
+    /**
      * Обновление баланса пользователя
      */
     PrimaApi.prototype.updateBallance = function(callback) {

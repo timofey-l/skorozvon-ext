@@ -323,6 +323,10 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
         }
     });
 
+    $scope.goToCabinet = function () {
+        $scope.primaApi.goToCabinet();
+    }
+
     $scope.updateBallance = function () {
         $('.reloadBalance').addClass('fa-spin');
         $scope.primaApi.updateBallance(function(r){
