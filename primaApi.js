@@ -247,8 +247,17 @@ PrimaApi = (function () {
                         url: result.data.url
                     }, function (newWindow) {
                         var win_id = newWindow.id;
-                        chrome.windows.onRemoved.addListener(function (winId) {
+                        var onTabUpdateListener = function(tabId, changeInfo, tab) {
+                            //console.log(tab);
+                            if (tab.windowId == win_id && tab.status=="complete" && (tab.url == 'http://office.primatel.ru/social-net-auth/success'
+                                || tab.url == 'http://office.primatel.ru/social-net-auth/success#')) {
+                                chrome.windows.remove(win_id);
+                            }
+                        };
+                        var onCloseListener = function(winId) {
                             if (winId == win_id) {
+                                chrome.windows.onRemoved.removeListener(onCloseListener);
+                                chrome.tabs.onUpdated.removeListener(onTabUpdateListener);
                                 self.DoRequest({
                                     svc: 'socialAuthCheck',
                                     sign: true,
@@ -277,7 +286,7 @@ PrimaApi = (function () {
                                                                     });
                                                                 }
                                                             }
-                                                            if (callback) callback(sip_arr);    
+                                                            if (callback) callback(sip_arr);
 
                                                         } else {
                                                             if (callback) callback(false);
@@ -293,7 +302,10 @@ PrimaApi = (function () {
                                     }
                                 });
                             }
-                        });
+
+                        };
+                        chrome.windows.onRemoved.addListener(onCloseListener);
+                        chrome.tabs.onUpdated.addListener(onTabUpdateListener);
                     });
                 } else {
                     self._login_error = result.data;
