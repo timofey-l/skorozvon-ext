@@ -57,8 +57,6 @@ Background = (function () {
         // загрузка языка
         loadLang(this._settings.lang);
 
-        // инициализация primaApi
-        this.primaApi = new PrimaApi();
 
         // интеграция
         this.integration = new Integration();
@@ -263,7 +261,7 @@ Background = (function () {
                 chrome.tabs.sendMessage(newWindow.tabs[0].id, {
                     method: "setPhones",
                     data: {
-                        from: self._settings.default_phone,
+                        from: self._settings.default_phone.replace(/\D/g, ''),
                         to: phone
                     }});
             }, 500);
@@ -272,5 +270,3 @@ Background = (function () {
 
     return Background;
 })();
-
-var background = new Background();

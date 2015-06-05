@@ -248,9 +248,8 @@ PrimaApi = (function () {
                     }, function (newWindow) {
                         var win_id = newWindow.id;
                         var onTabUpdateListener = function(tabId, changeInfo, tab) {
-                            //console.log(tab);
-                            if (tab.windowId == win_id && tab.status=="complete" && (tab.url == 'http://office.primatel.ru/social-net-auth/success'
-                                || tab.url == 'http://office.primatel.ru/social-net-auth/success#')) {
+                            var correct_url = tab.url.indexOf("http://office.primatel.ru/social-net-auth/success") == 0;
+                            if (tab.windowId == win_id && tab.status=="complete" && correct_url) {
                                 chrome.windows.remove(win_id);
                             }
                         };
@@ -330,19 +329,20 @@ PrimaApi = (function () {
             sign: true,
             data: data,
             onSuccess: function (data) {
+                console.log(data);
                 if (data.result == 1) {
                     self._settings.sip_login = sip;
                     self._settings.sip_password = data.data.password;
-                    callback(true);
-                    self.loginUser(function (r) {
+                    self.loginUser(function (r,data) {
                         if (r === true) {
-                            window.location.hash = "#/settings";
+                            if(callback) callback(true);
+                            //window.location.hash = "#/settings";
                         } else {
-                            if (callback) callback(false);
+                            if (callback) callback(false, data.data);
                         }
                     });
                 } else {
-                    if (callback) callback(false);
+                    if (callback) callback(false, data.data);
                 }
 
             }
@@ -459,7 +459,7 @@ PrimaApi = (function () {
                 // AMO
                 if (background._settings.amo_enabled) {
                     background.integration.amoConnect(function () {
-                        background.integration.amoGetContact(data.number_a, function (r) {
+                        background.integration.amoGetContact(data.number_a.slice(-9), function (r) {
                             if (r && r.response && r.response.contacts && r.response.contacts[0]) {
                                 opt.items.push({
                                     title: 'amoCRM:',
@@ -468,7 +468,41 @@ PrimaApi = (function () {
                                 if (opt.items[0].title.trim() == '') {
                                     opt.items = opt.items.slice(1);
                                 }
-                                console.log(opt);
+
+                                var _data = JSON.stringify({
+                                    request: {
+                                        notes: {
+                                            add: [
+                                                {
+                                                    element_id: r.response.contacts[0].id,
+                                                    element_type: 1,
+                                                    note_type: 4,
+                                                    text: "123123123123",
+                                                    responsible_user_id: 8571889
+                                                }
+                                            ]
+                                        }
+                                    }
+                                });
+
+                                // добавляем событие о входящем звонке контакта
+                                $.ajax({
+                                    method: "POST",
+                                    url: "https://" + background._settings.amo_domain + ".amocrm.ru/private/api/v2/json/notes/set",
+                                    dataType: 'json',
+                                    data: _data,
+                                    headers:{"Content-Type":"application/json"}
+                                });
+
+                                // открываем окно с контактом
+                                if (r.response.contacts[0].id > 0) {
+                                    chrome.windows.create({
+                                        type: 'popup',
+                                        url: "http://" + background._settings.amo_domain + ".amocrm.ru/contacts/detail/" + r.response.contacts[0].id
+                                    }, function (newWindow) {});
+                                }
+
+                                //console.log(opt);
                                 chrome.notifications.update(message_id, opt, function () {
                                 });
                             }
@@ -778,7 +812,7 @@ PrimaApi = (function () {
             async: true,
             data: _opt.data,
             type: 'POST',
-            url: "" + this._settings[_opt.base_url + "Url"] + "?svc=" + _opt.svc + "&mode=" + this._settings.mode + "&lang=" + this._settings.lang,
+            url: "" + this._settings[_opt.base_url + "Url"] + "?svc=" + _opt.svc + "&mode=" + this._settings.mode + "&lang=" + background._settings.lang,
             success: function (response, textStatus, jqXHR) {
                 if (typeof _opt.onSuccess === 'function') {
                     return _opt.onSuccess(response, textStatus, jqXHR);
@@ -938,15 +972,19 @@ PrimaApi = (function () {
     /**
      * Переход в личный кабинет
      */
-    PrimaApi.prototype.goToCabinet = function() {
+    PrimaApi.prototype.goToCabinet = function(page) {
         var self = this;
+        var params = {
+            sip_login: self._settings.sip_login,
+            sip_password: self._settings.sip_password
+        };
+        if (typeof page != 'undefined') {
+            params.page = page;
+        }
         self.DoRequest({
             svc: 'getCabinetLink2',
             sign: true,
-            data: {
-                sip_login: self._settings.sip_login,
-                sip_password: self._settings.sip_password
-            },
+            data: params,
             onSuccess: function (resp) {
                 if (resp.result == 1) {
                     chrome.tabs.create({
@@ -1091,16 +1129,16 @@ PrimaApi = (function () {
                 if (data.result == 1) {
                     self._settings.sip_login = _data.sip_login;
                     self._settings.sip_password = data.data.password;
-                    callback(true);
-                    self.loginUser(function (r) {
+                    self.loginUser(function (r, data) {
                         if (r === true) {
-                            window.location.hash = "#/settings";
+                            //window.location.hash = "#/settings";
+                            if (callback) callback(true);
                         } else {
-                            if (callback) callback(false);
+                            if (callback) callback(false, data);
                         }
                     });
                 } else {
-                    if (callback) callback(false);
+                    if (callback) callback(false, data);
                 }
             },
             onError: function () {

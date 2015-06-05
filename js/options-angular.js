@@ -323,9 +323,9 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
         }
     });
 
-    $scope.goToCabinet = function () {
-        $scope.primaApi.goToCabinet();
-    }
+    $scope.goToCabinet = function (page) {
+        $scope.primaApi.goToCabinet(page);
+    };
 
     $scope.updateBallance = function () {
         $('.reloadBalance').addClass('fa-spin');
@@ -423,6 +423,8 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
                 $('.prima-login-dialog .sip-list').fadeIn(300);
                 $scope.$digest();
             } else {
+                $scope.lk_login = '';
+                $scope.lk_password = '';
                 alert(t('error_prima_login'));
                 $('#my-content').fadeIn(300);
                 $('.prima-login-dialog').fadeOut(300);
@@ -435,7 +437,7 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
         $('body').css({cursor: 'wait'});
 
         if (!$scope.lk_login) {
-            $scope.primaApi.loginSocialSip(sip.sip, function (r) {
+            $scope.primaApi.loginSocialSip(sip.sip, function (r, data) {
                 $('body').css({cursor: 'default'});
                 if (r === true) {
                     setTimeout(function () {
@@ -443,7 +445,7 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
                     }, 2000);
                 } else {
                     $('.prima-login-dialog').fadeIn(300);
-                    alert(t('login_social_error'));
+                    alert(data);
                 }
             });
 
@@ -452,15 +454,16 @@ optionsApp.controller('loginCtrl', function ($scope, $route, $routeParams, $loca
                 login: $scope.lk_login,
                 password: $scope.lk_password,
                 sip_login: sip.sip
-            }, function (r) {
+            }, function (r, data) {
                 $('body').css({cursor: 'default'});
                 if (r === true) {
                     setTimeout(function () {
                         window.location.hash = "#/settings";
                     }, 2000);
                 } else {
-                    $('.prima-login-dialog').fadeIn(300);
-                    alert(t('error_prima_login'));
+                    $('#my-content').fadeIn(300);
+                    $('.prima-login-dialog').fadeOut(300);
+                    alert(data);
                 }
             });
         }
@@ -650,6 +653,7 @@ optionsApp.controller('recoverCtrl', function ($scope) {
                         window.location.hash = "#/settings";
                     } else {
                         $scope.step = 1;
+                        $scope.email_code = "";
                         $scope.$digest();
                         $('#forget_window').fadeIn(300);
                         $('body').css({'cursor': 'default'});
