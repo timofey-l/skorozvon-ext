@@ -35,9 +35,10 @@ function renderPopup(bg) {
                 buttons_div.append($('<div class="button btn_phone">').html('').click(function () {
                     bg.doCall(number);
                 }));
-                buttons_div.append($('<div class="button btn_sms">').html('').click(function () {
-                    bg.openSMSSend(number);
-                }));
+                if (window.bg_wnd.background.primaApi.allowSMS())
+                    buttons_div.append($('<div class="button btn_sms">').html('').click(function () {
+                        bg.openSMSSend(number);
+                    }));
             }
 
             phone_div.append(buttons_div);

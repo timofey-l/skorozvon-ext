@@ -1146,6 +1146,20 @@ PrimaApi = (function () {
         });
     };
 
+
+    /**
+     * Возвращает true если СМС отправлять можно, иначе false
+     */
+    PrimaApi.prototype.allowSMS = function() {
+        var result = false;
+        for (var i in this._services) {
+            if (this._services[i]['service'] == 'sms') {
+                result = true;
+            }
+        }
+        return result;
+    };
+
     return PrimaApi;
 
 })

@@ -15,10 +15,9 @@ var Primatel = function(){
 
     this._bg_settings = chrome.extension.sendMessage({method:'getSettings'}, function(r) {
         self._bg_settings = r;
-    });
-
-    window.addEventListener('load', function(){
-        self.parsePage();
+        window.addEventListener('load', function(){
+            self.parsePage();
+        });
     });
 };
 

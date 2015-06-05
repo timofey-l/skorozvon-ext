@@ -93,7 +93,7 @@ function addHover(el, phone) {
                 var sipurl = "tel:+" + phone.replace(/[\D]/gmi,'');
 
                 var buttons_list_container = $('<div class="itd_buttons_list_container">' +
-                '<div class="primatel_sms_button"></div>' +
+                    (window.primatel._bg_settings.allowSMS ? '<div class="primatel_sms_button"></div>' : '') +
                 '<div class="primatel_call_button"></div>' +
                 '</div>');
 

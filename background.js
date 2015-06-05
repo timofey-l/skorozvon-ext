@@ -71,7 +71,9 @@ Background = (function () {
      * Получение настроек
      */
     Background.prototype.getSettings = function () {
-        return $.extend({}, this._settings);
+        return $.extend({
+            allowSMS: this.primaApi.allowSMS()
+        }, this._settings);
     };
 
     /**
