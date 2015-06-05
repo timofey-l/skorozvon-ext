@@ -476,9 +476,8 @@ PrimaApi = (function () {
                                                 {
                                                     element_id: r.response.contacts[0].id,
                                                     element_type: 1,
-                                                    note_type: 4,
-                                                    text: "123123123123",
-                                                    responsible_user_id: 8571889
+                                                    note_type: 10,
+                                                    text: '\"PHONE\": \"'+data.number_a+'\"'
                                                 }
                                             ]
                                         }
