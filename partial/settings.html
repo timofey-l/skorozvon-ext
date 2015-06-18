@@ -53,6 +53,10 @@
                        placeholder="{{t('enter_phone_number')}}"/>
             </div>
             <div class="soft_phone_options selection" ng-show="settings.call_type == 2">
+                <div class="info" ng-bind-html="t('settings_softphone_hint')">
+                    
+                </div>
+
                 <div class="radio" ng-class="{checked: settings.sp_type == 'sip'}" ng-click="settings.sp_type = 'sip'">
                     sip:
                 </div>

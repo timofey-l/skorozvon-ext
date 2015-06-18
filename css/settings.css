@@ -628,3 +628,19 @@ table{width: 100px !important;}
 .soft_phone_options .radio {
 
 }
+
+
+.soft_phone_options .info {
+    background: url('/img/info.png') no-repeat;
+    color: #336c9e;
+    font-style: italic;
+    background-position: 15px 10px;
+    background-size: 50px;
+    padding-left: 80px;
+    line-height: 1.4;
+    min-height: 70px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    width: 720px;
+    padding-right: 30px;
+}

@@ -97,6 +97,7 @@ LANGS = {
         login_prima_password: "Введите пароль",
         error_prima_login: "Ошибка при входе через личный кабинет Прима Телеком",
         settings_account_link: 'Личный кабинет',
+        settings_softphone_hint: "Выберите протокол, который используется в Вашей системе для совершения VoIP звонков. <br/> Если затрудняетесь с выбором, то попробуйте каждый по очереди, пока не найдете рабочий для Вас вариант.",
     },
     en: {
         title: 'Send SMS',
@@ -194,6 +195,7 @@ LANGS = {
         login_prima_password: "Enter password",
         error_prima_login: "error occured while signing in with Prima Telecom account",
         settings_account_link: 'Account',
+        settings_softphone_hint: "Select protocol which is used in your system for making VoIP calls. <br/> If not sure, try all one by one, until you find a working for you variant.",
     }
 };
 
