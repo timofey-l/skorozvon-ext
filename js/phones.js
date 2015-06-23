@@ -29,7 +29,7 @@ function renderPopup(bg) {
             var number = this;
 
             //console.log(this);
-            var phone_div = $('<div class="phone">' + this + '</div>');
+            var phone_div = $('<div class="phone">' + formatInternational(window.bg_wnd.background._settings.default_country, this) + '</div>');
             var buttons_div = $('<div class="buttons">');
             if (loggedIn) {
                 buttons_div.append($('<div class="button btn_phone">').html('').click(function () {
