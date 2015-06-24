@@ -644,3 +644,13 @@ table{width: 100px !important;}
     width: 720px;
     padding-right: 30px;
 }
+
+.version {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #cccccc;
+    font-size: 14px;
+    line-height: 1;
+
+}

@@ -4,6 +4,10 @@
 }</style>
 <div id="content" class="window-sett">
     <div class="settings">
+        <span class="version">
+            {{ t('version') }}: {{ background.version }}
+        </span>
+
 		<span class="language"
               ng-class="{'en': settings.lang == 'ru', 'ru': settings.lang == 'en'}"
               ng-click="changeLang()">
