@@ -3,7 +3,7 @@
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "name": "Primatelecom",
   "description": "This extension allows Primatel clients make calls from browser",
-  "version": "1.0rc",
+  "version": "1.0",
 
   "permissions": ["notifications", "tabs", "<all_urls>","activeTab","storage"],
 
