@@ -22,6 +22,7 @@ optionsApp.controller('settingsCtrl', function ($scope, $route, $routeParams, $l
     window.s = $scope;
     $scope.t = window.t;
 
+    $scope.background = background;
     $scope.settings = background._settings;
     $scope.primaApi = background.primaApi;
 

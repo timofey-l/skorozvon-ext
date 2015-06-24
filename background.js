@@ -3,6 +3,7 @@ var Background;
 
 Background = (function () {
     function Background() {
+        this.version = '1.0rc';
         this._defaults = {
             // 1-web
             // 2-soft
@@ -160,6 +161,10 @@ Background = (function () {
             case 3:
                 this.openCallback(phone);
         }
+    };
+
+    Background.prototype.openSettingsPage = function() {
+        chrome.tabs.create({url: chrome.extension.getURL('/options.html')});
     };
 
     /**
