@@ -54,9 +54,12 @@ if (window == top) {
             if (m.index === re.lastIndex) {
                 re.lastIndex++;
             }
-            var p = "+" + m[0].replace(/\D/g, '');
-            if (isValidNumber(p, this._bg_settings.default_country))
-                phones.push(p);
+            var p = m[0].replace(/\D/g, '');
+            if (isValidNumber(p, this._bg_settings.default_country)) {
+                phones.push(formatE164(this._bg_settings.default_country, p));
+            } else if (isValidNumber("+" + p, this._bg_settings.default_country)) {
+                phones.push(formatE164(this._bg_settings.default_country, "+" + p));
+            }
         }
 
         // отделяем локальные
@@ -67,7 +70,7 @@ if (window == top) {
             }
             var p = "+" + country_code.toString() + m[0].replace(/\D/g, '');
             if (isValidNumber(p, this._bg_settings.default_country))
-                phones.push(p);
+                phones.push(formatE164(this._bg_settings.default_country, p));
         }
 
 

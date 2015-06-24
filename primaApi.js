@@ -410,9 +410,13 @@ PrimaApi = (function () {
             return;
         }
         if (data.svc && data.svc == 'incoming' && background.primaApi._settings.show_notify) {
+            if (data.number_a.length == 10) {
+                data.number_a = "+7" + data.number_a;
+            }
+
             var opt = {
                 type: "list",
-                title: formatLocal(background._settings.default_country, "+" + data.number_a),
+                title: formatInternational(background._settings.default_country, "+" + data.number_a),
                 expandedMessage: "sdsd",
                 message: t('notify_text_incoming')
                     .replace(/:caller/g, formatInternational(background._settings.default_country, "+" + data.number_a))
