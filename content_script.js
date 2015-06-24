@@ -47,7 +47,7 @@ if (window == top) {
             }
         } else {
             // проверим на наличие телефона международном формате
-            var re = RegExp('[+]?([\\s\\-()]{0,2}\\d){11,12}', 'gmi');
+            var re = RegExp('[+]?([\\s\\-‒—\(\)]{0,2}\\d){11,12}', 'gmi');
             //var re = /([ ()+-\s]{0,3}\d){11,12}/gmi;
             var phone = re.exec(element.textContent);
             if (phone != null) {

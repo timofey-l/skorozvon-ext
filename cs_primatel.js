@@ -48,6 +48,17 @@ if (window == top) {
         var phones = [];
         var source = document.body.textContent;
 
+        // отделяем в международном формате
+        var re = RegExp('[+]?([\\s\\-‒—()]{0,2}\\d){11,12}', 'gmi');
+        while ((m = re.exec(source)) != null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+            var p = "+" + m[0].replace(/\D/g, '');
+            if (isValidNumber(p, this._bg_settings.default_country))
+                phones.push(p);
+        }
+
         // отделяем локальные
         var re = RegExp('\\s([\\D]{0,2}\\d){' + (this.number_length) + '}\\s', 'gmi');
         while ((m = re.exec(source)) != null) {
@@ -55,17 +66,6 @@ if (window == top) {
                 re.lastIndex++;
             }
             var p = "+" + country_code.toString() + m[0].replace(/\D/g, '');
-            if (isValidNumber(p, this._bg_settings.default_country))
-                phones.push(p);
-        }
-
-        // отделяем в международном формате
-        var re = RegExp('[+]?([\\s\\-()]{0,2}\\d){11,12}', 'gmi');
-        while ((m = re.exec(source)) != null) {
-            if (m.index === re.lastIndex) {
-                re.lastIndex++;
-            }
-            var p = "+" + m[0].replace(/\D/g, '');
             if (isValidNumber(p, this._bg_settings.default_country))
                 phones.push(p);
         }
