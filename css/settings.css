@@ -405,13 +405,14 @@ div.switch.off {
 }
 .settings-block2 li{
     display: inline-block;
-    width: 50%;
+    width: 49%;
     vertical-align: top;
 }
 .settings-block2 li:last-child{
-    width: 35%;
-    margin-bottom: 40px;
-    float: right;
+    /*width: 35%;*/
+    /*margin-bottom: 40px;*/
+    /*float: right;*/
+    text-align: right;
 }
 .crm{
     margin: 0 0 20px;
