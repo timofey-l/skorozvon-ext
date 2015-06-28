@@ -3,7 +3,7 @@ var Background;
 
 Background = (function () {
     function Background() {
-        this.version = '1.0rc';
+        this.version = '1.0.1rc';
         this._defaults = {
             // 1-web
             // 2-soft
