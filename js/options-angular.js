@@ -523,6 +523,7 @@ optionsApp.controller('regCtrl', function ($scope, $route, $routeParams, $locati
                     }
                 } else {
                     $scope.errors = res.data;
+                    alert(res.data);
                 }
             });
         } else {
